@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import pl.infoshare.clinicweb.exception.validation.TimeSlotUnavailableException;
+import pl.infoshare.clinicweb.user.PeselFormatException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,12 @@ public class ExceptionHandlerApp {
         Map<String, String> errorsMap = new HashMap<>();
         errorsMap.put("error", "Niepoprawny format numeru pesel.");
 
+        return errorsMap;
+    }
+    @ExceptionHandler(TimeSlotUnavailableException.class)
+    public  Map<String ,String> handleTimeSlotUnavailableException(TimeSlotUnavailableException exception) {
+        Map<String, String> errorsMap = new HashMap<>();
+        errorsMap.put("error","Wybrany termin jest juz zajety");
         return errorsMap;
     }
 

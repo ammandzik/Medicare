@@ -7,16 +7,14 @@ import pl.infoshare.clinicweb.patient.Patient;
 import pl.infoshare.clinicweb.user.PersonDetails;
 
 
-
 @Component
 @AllArgsConstructor
 
 public class VisitMapper {
 
 
-
-
     public VisitDto toVisitDto(Visit visit) {
+
 
 
         VisitDto visitDto = new VisitDto();
@@ -82,7 +80,7 @@ public class VisitMapper {
         visit.setPatient(patient);
         visit.setDoctor(doctor);
 
+
         return visit;
     }
-
 }

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.patient.Address;
 import pl.infoshare.clinicweb.user.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -119,7 +118,6 @@ public class DoctorController {
         DoctorDto doctorById = doctorService.findById(id);
 
         model.addAttribute("searchForId", doctorById);
-
         return "search-doctor";
     }
 

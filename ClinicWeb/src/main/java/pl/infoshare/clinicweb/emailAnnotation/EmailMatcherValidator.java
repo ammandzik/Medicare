@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailMatcherValidator {
-    String message() default "Hasła muszą być identyczne.";
+    String message() default "Podany adres email istnieje już w bazie.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

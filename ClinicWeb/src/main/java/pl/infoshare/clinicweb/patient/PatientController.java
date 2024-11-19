@@ -7,14 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.infoshare.clinicweb.advice.ExceptionHandlerApp;
+import pl.infoshare.clinicweb.advice.PeselFormatException;
 import pl.infoshare.clinicweb.doctor.DoctorDto;
 import pl.infoshare.clinicweb.doctor.DoctorService;
-import pl.infoshare.clinicweb.user.entity.PersonDetails;
-import pl.infoshare.clinicweb.advice.PeselFormatException;
 import pl.infoshare.clinicweb.user.Utils;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +26,6 @@ public class PatientController {
     private final PatientService patientService;
 
     private final DoctorService doctorService;
-    private final ExceptionHandlerApp exceptionHandlerApp;
-    private final View error;
 
 
     @GetMapping("/patient")

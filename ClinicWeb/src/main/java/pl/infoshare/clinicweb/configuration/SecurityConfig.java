@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import pl.infoshare.clinicweb.user.service.AppUserService;
+import pl.infoshare.clinicweb.user.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class SecurityConfig {
             "/styles/**",
             "/images/**"};
 
-    private final AppUserService userService;
+    private final UserService userService;
 
     @Bean
     PasswordEncoder passwordEncoder() {

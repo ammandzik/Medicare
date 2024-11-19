@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import pl.infoshare.clinicweb.patient.PatientService;
 
 import java.time.LocalDate;
 
@@ -33,13 +32,5 @@ public class PersonDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private LocalDate setDateOfBirth(String pesel) {
-
-        LocalDate localDate = PatientService.decodeDateOfBirth(pesel);
-
-        return localDate;
-
-
-    }
 
 }

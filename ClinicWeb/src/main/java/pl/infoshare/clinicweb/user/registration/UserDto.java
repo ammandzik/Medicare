@@ -1,6 +1,7 @@
 package pl.infoshare.clinicweb.user.registration;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import pl.infoshare.clinicweb.emailAnnotation.EmailMatcherValidator;
 import pl.infoshare.clinicweb.passwordAnnotation.PasswordMatcherValidator;
@@ -10,7 +11,8 @@ import pl.infoshare.clinicweb.user.entity.Role;
 @Data
 @PasswordMatcherValidator
 @EmailMatcherValidator
-public class AppUserDto {
+@Builder
+public class UserDto {
 
     private Long id;
     @NotEmpty(message = "Pole email nie może być puste.")

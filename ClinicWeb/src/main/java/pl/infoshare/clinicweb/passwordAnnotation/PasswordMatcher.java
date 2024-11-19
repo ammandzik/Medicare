@@ -2,9 +2,9 @@ package pl.infoshare.clinicweb.passwordAnnotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import pl.infoshare.clinicweb.user.registration.AppUserDto;
+import pl.infoshare.clinicweb.user.registration.UserDto;
 
-public final class PasswordMatcher implements ConstraintValidator<PasswordMatcherValidator, AppUserDto> {
+final class PasswordMatcher implements ConstraintValidator<PasswordMatcherValidator, UserDto> {
 
     @Override
     public void initialize(PasswordMatcherValidator constraintAnnotation) {
@@ -12,13 +12,13 @@ public final class PasswordMatcher implements ConstraintValidator<PasswordMatche
     }
 
     @Override
-    public boolean isValid(AppUserDto appUserDto, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(UserDto userDto, ConstraintValidatorContext constraintValidatorContext) {
 
-        if (appUserDto == null) {
+        if (userDto == null) {
             return true;
         }
 
-        boolean isPasswordValid = appUserDto.getPassword().equals(appUserDto.getConfirmPassword());
+        boolean isPasswordValid = userDto.getPassword().equals(userDto.getConfirmPassword());
 
         if (!isPasswordValid) {
             constraintValidatorContext.disableDefaultConstraintViolation();
@@ -26,6 +26,6 @@ public final class PasswordMatcher implements ConstraintValidator<PasswordMatche
                     .addPropertyNode("password")
                     .addConstraintViolation();
         }
-        return isPasswordValid ;
+        return isPasswordValid;
     }
 }

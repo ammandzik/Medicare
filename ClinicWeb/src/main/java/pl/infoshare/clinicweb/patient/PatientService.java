@@ -62,13 +62,7 @@ public class PatientService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("id"));
         Page<Patient> entities = patientRepository.findAll(pageable);
 
-        Page<PatientDto> patients = entities.map(patient -> {
-            PatientDto patientDto = patientMapper.toDto(patient);
-
-            return patientDto;
-        });
-
-        return patients;
+        return entities.map(patientMapper::toDto);
     }
 
     public void updatePatient(PatientDto patientDto, Address address) {

@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.user.entity.Role;
-import pl.infoshare.clinicweb.user.service.AppUserService;
+import pl.infoshare.clinicweb.user.entity.User;
+import pl.infoshare.clinicweb.user.service.UserService;
 
 @Controller
 @AllArgsConstructor
 @Slf4j
 public class RegistrationController {
 
-    private final AppUserService userService;
+    private final UserService userService;
 
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm(@ModelAttribute UserDto user, Model model) {
 
 
-        model.addAttribute("user", new AppUserDto());
+        model.addAttribute("user", user);
 
         log.info("New user registration form was requested.");
 
@@ -32,7 +33,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerFormSubmission(@Valid @ModelAttribute("user") AppUserDto user, BindingResult bindingResult,
+    public String registerFormSubmission(@Valid @ModelAttribute("user") UserDto user, BindingResult bindingResult,
                                          Model model, RedirectAttributes redirectAttributes
     ) {
 
@@ -47,6 +48,7 @@ public class RegistrationController {
         model.addAttribute("success", "Pomyślnie zarejestrowano użytkownika pacjenta.");
         redirectAttributes.addFlashAttribute("success",
                 "Pomyślnie zarejestrowano użytkownika pacjenta.");
+        
         return "redirect:/login";
     }
 

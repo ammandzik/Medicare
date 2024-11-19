@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class ExceptionHandlerApp {
+class ExceptionHandlerApp {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

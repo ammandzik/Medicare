@@ -1,34 +1,29 @@
 package pl.infoshare.clinicweb.user.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.infoshare.clinicweb.user.entity.AppUser;
-import pl.infoshare.clinicweb.user.registration.AppUserDto;
+import pl.infoshare.clinicweb.user.entity.User;
+import pl.infoshare.clinicweb.user.registration.UserDto;
 
 @Component
 public class UserMapper {
 
-    public AppUserDto toDto(AppUser user) {
+    public UserDto toDto(User user) {
 
-
-        AppUserDto userDto = new AppUserDto();
-
-        userDto.setId(user.getId());
-        userDto.setEmail(user.getEmail());
-        userDto.setPassword(userDto.getPassword());
-        userDto.setRole(user.getRole());
-
-
-        return userDto;
+        return UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .role(user.getRole())
+                .build();
     }
 
-    public AppUser toEntity(AppUserDto userDto) {
+    public User toEntity(UserDto userDto) {
 
-        AppUser user = new AppUser();
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setRole(userDto.getRole());
-        user.setId(userDto.getId());
-
-        return user;
+        return User.builder()
+                .id(userDto.getId())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .role(userDto.getRole())
+                .build();
     }
 }

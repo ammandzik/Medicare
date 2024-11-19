@@ -3,16 +3,15 @@ package pl.infoshare.clinicweb.user.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.infoshare.clinicweb.user.entity.AppUser;
 import pl.infoshare.clinicweb.user.entity.Role;
+import pl.infoshare.clinicweb.user.entity.User;
 import pl.infoshare.clinicweb.user.mapper.UserMapper;
-import pl.infoshare.clinicweb.user.registration.AppUserDto;
-import pl.infoshare.clinicweb.user.repository.AppUserRepository;
+import pl.infoshare.clinicweb.user.registration.UserDto;
+import pl.infoshare.clinicweb.user.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -20,22 +19,22 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class AppUserService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
-    private final AppUserRepository userRepository;
+    private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        AppUser user = userRepository.findUserByEmail(email).get();
+        var user = findUserWithEmail(email).get();
 
         if (!user.equals(null)) {
 
             log.info("User was found with email: {}", email);
 
-            return User.builder()
+            return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getEmail())
                     .password(user.getPassword())
                     .roles(String.valueOf(user.getRole()))
@@ -48,7 +47,12 @@ public class AppUserService implements UserDetailsService {
 
     }
 
-    public void saveUser(AppUserDto user) {
+    public void addUser(User user) {
+
+        userRepository.save(user);
+    }
+
+    public void saveUser(UserDto user) {
 
         user.setRole(Role.PATIENT);
         var appUser = userMapper.toEntity(user);
@@ -57,9 +61,25 @@ public class AppUserService implements UserDetailsService {
 
     }
 
+    public void deleteUserById(Long id) {
+
+        userRepository.deleteById(id);
+    }
+
+    public Optional<User> findUserWithEmail(String email) {
+
+        return userRepository.findUserByEmail(email);
+
+    }
+
+    public Optional<User> findUserWithId(Long id) {
+
+        return userRepository.findById(id);
+    }
+
     public boolean isUserAlreadyRegistered(String email) {
 
-        Optional<AppUser> user = userRepository.findUserByEmail(email);
+        Optional<User> user = userRepository.findUserByEmail(email);
 
         return user.isPresent();
 

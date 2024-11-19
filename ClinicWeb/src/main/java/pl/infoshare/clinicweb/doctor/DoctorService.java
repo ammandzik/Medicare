@@ -8,7 +8,6 @@ import pl.infoshare.clinicweb.patient.Address;
 import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +33,7 @@ public class DoctorService {
         return doctorRepository.findAll()
                 .stream()
                 .map(doctorMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Page<DoctorDto> findAllPage(int pageNumber) {
@@ -46,12 +45,7 @@ public class DoctorService {
         Page<Doctor> entities = doctorRepository.findAll(pageable);
 
 
-        doctors = entities.map(doctor -> {
-            DoctorDto doctorDto = doctorMapper.toDto(doctor);
-
-            return doctorDto;
-        });
-        return doctors;
+        return entities.map(doctorMapper::toDto);
 
     }
 
@@ -69,10 +63,6 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
 
-    public void findDoctorByKey(String name, String surname) {
-
-    }
-
 
     Page<DoctorDto> findDoctorBySpecialization(int pageNumber, Specialization specialization) {
 
@@ -84,7 +74,7 @@ public class DoctorService {
                 .stream()
                 .filter(doctor -> doctor.getSpecialization().equals(specialization))
                 .map(doctorMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
 
 
         return new PageImpl<>(doctorDtos);

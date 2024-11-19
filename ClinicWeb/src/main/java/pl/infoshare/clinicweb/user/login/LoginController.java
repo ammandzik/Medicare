@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.infoshare.clinicweb.user.entity.AppUser;
+import pl.infoshare.clinicweb.user.entity.User;
 
 @Controller
 @AllArgsConstructor
@@ -14,9 +14,9 @@ import pl.infoshare.clinicweb.user.entity.AppUser;
 public class LoginController {
 
     @GetMapping("/login")
-    public String login(Model model) {
+    String login(Model model) {
 
-        AppUser user = getPrincipal();
+        var user = getPrincipal();
 
         if (user != null) {
 
@@ -30,17 +30,16 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    String logout() {
 
-        log.info("User was successfully logged out.");
         return "index";
 
     }
 
-    private AppUser getPrincipal() {
-        AppUser user = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof AppUser) {
-            user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private User getPrincipal() {
+        User user = null;
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         }
         return user;
     }

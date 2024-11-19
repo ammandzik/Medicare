@@ -113,6 +113,7 @@ INSERT INTO users(email, password, role) VALUES
 ("damian.pered@onet.pl", "Puszek123!", 'DOCTOR'),
 ("melania.halinowska@wp.pl", "trampek123", 'PATIENT'),
 ("danuta.kopec@onet.pl", "Puszek123!", 'DOCTOR'),
-("krystian.krawiec@onet.pl", "Puszek123!", 'DOCTOR');
+("krystian.krawiec@onet.pl", "Puszek123!", 'DOCTOR'),
+("admin@onet.pl", "admin", 'ADMIN');
 
 

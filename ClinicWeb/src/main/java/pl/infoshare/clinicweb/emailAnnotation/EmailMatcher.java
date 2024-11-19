@@ -3,15 +3,15 @@ package pl.infoshare.clinicweb.emailAnnotation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
-import pl.infoshare.clinicweb.user.registration.AppUserDto;
-import pl.infoshare.clinicweb.user.service.AppUserService;
+import pl.infoshare.clinicweb.user.registration.UserDto;
+import pl.infoshare.clinicweb.user.service.UserService;
 
 @Component
-public final class EmailMatcher implements ConstraintValidator<EmailMatcherValidator, AppUserDto> {
+public final class EmailMatcher implements ConstraintValidator<EmailMatcherValidator, UserDto> {
 
-        private final AppUserService userService;
+        private final UserService userService;
 
-        public EmailMatcher(AppUserService userService){
+        public EmailMatcher(UserService userService){
             this.userService = userService;
         }
 
@@ -21,14 +21,14 @@ public final class EmailMatcher implements ConstraintValidator<EmailMatcherValid
         }
 
         @Override
-        public boolean isValid(AppUserDto appUserDto, ConstraintValidatorContext constraintValidatorContext) {
+        public boolean isValid(UserDto userDto, ConstraintValidatorContext constraintValidatorContext) {
 
 
-            if (appUserDto == null) {
+            if (userDto == null) {
                 return true;
             }
 
-            boolean isEmailValid = !userService.isUserAlreadyRegistered(appUserDto.getEmail());
+            boolean isEmailValid = !userService.isUserAlreadyRegistered(userDto.getEmail());
 
             if (!isEmailValid) {
                 constraintValidatorContext.disableDefaultConstraintViolation();

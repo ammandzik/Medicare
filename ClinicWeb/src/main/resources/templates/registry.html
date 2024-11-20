@@ -131,7 +131,7 @@
                    th:errors="${user.password}">Confirm password error</p>
             </div>
 
-
+            <div sec:authorize="isAnonymous()">
             <select name="role"
                     class="form-select"
                     required
@@ -143,6 +143,20 @@
                         th:value="'PATIENT'"
                         th:text="${role.getRoleDescription()}"></option>
             </select>
+            </div>
+
+            <div sec:authorize="hasRole('ADMIN')">
+                <select name="role"
+                        class="form-select"
+                        required
+                        oninvalid="setCustomValidity('Rejestruje się jako')"
+                        oninput="setCustomValidity('')">
+
+                    <option th:each="role : ${T(pl.infoshare.clinicweb.user.entity.Role).values()}"
+                            th:value="${role}"
+                            th:text="${role.getRoleDescription()}"></option>
+                </select>
+            </div>
             <div th:align="center" th:if="${success}" class="mt-4 alert alert-success" role="alert">
                 <p th:text="${success}">Sukces</p>
             </div>

@@ -3,7 +3,6 @@ package pl.infoshare.clinicweb.visit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.infoshare.clinicweb.doctor.Doctor;
@@ -23,26 +22,27 @@ public class Visit {
     private Long id;
     @NotNull(message = "Pole data nie moze byc puste. ")
     @FutureOrPresent(message = "Wybierz datę z przyszłości. ")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime visitDate;
     @ManyToOne
     private Patient patient;
     @ManyToOne
     private Doctor doctor;
-    //    private List<Medicines> medicines;
     private UUID numberOfVisits = UUID.randomUUID();
     private boolean cancelVisit;
+    private LocalDateTime visitTime;
 
 
     public void setVisitDate(LocalDateTime visitDate) {
 
-        this.visitDate =   LocalDateTime.of(visitDate.getYear(),
+        this.visitDate = LocalDateTime.of(visitDate.getYear(),
                 visitDate.getMonth(),
                 visitDate.getDayOfMonth(),
                 visitDate.getHour(),
                 visitDate.getMinute(), 0);
 
     }
+
     public boolean isVisitPastDate() {
 
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -50,6 +50,4 @@ public class Visit {
         return this.visitDate.isBefore(localDateTime);
 
     }
-
-
 }

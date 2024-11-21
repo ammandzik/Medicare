@@ -100,5 +100,17 @@ public class DoctorService {
 
     }
 
+    public DoctorDto findByPesel(String pesel) {
+
+        return doctorRepository.findByPesel(pesel.trim())
+                .map(doctorMapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Doctor not found with pesel %s", pesel)));
+    }
+
+    public boolean existsByPesel(String pesel) {
+
+        return doctorRepository.findByPesel(pesel).isEmpty() ? false : true;
+    }
+
 
 }

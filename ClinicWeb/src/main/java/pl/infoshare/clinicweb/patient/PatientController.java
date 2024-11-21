@@ -159,7 +159,7 @@ public class PatientController {
             model.addAttribute("patientByPesel", patientByPesel);
         }
 
-        return "search-patient";
+        return "patient/search-patient";
 
     }
 

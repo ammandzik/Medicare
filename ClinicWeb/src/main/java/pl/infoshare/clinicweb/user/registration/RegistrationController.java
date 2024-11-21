@@ -28,21 +28,20 @@ public class RegistrationController {
 
         log.info("New user registration form was requested.");
 
-        return "registry";
+        return "user/registry";
     }
 
     @PostMapping("/register")
     public String registerFormSubmission(@Valid @ModelAttribute("user") UserDto user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("userRole", Role.PATIENT);
+
             model.addAttribute("user", user);
             log.info("Validation error occured while registering user.");
-            return "registry";
+            return "user/registry";
         }
 
         userService.saveUser(user);
-
         redirectAttributes.addFlashAttribute("success", "Pomyślnie zarejestrowano użytkownika pacjenta.");
 
         return "redirect:/login";

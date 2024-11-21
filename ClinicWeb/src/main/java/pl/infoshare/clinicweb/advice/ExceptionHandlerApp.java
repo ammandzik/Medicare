@@ -2,19 +2,20 @@ package pl.infoshare.clinicweb.advice;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.infoshare.clinicweb.exception.validation.TimeSlotUnavailableException;
-import pl.infoshare.clinicweb.user.PeselFormatException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
 @ControllerAdvice
 @Slf4j
 public class ExceptionHandlerApp {
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleException(MethodArgumentNotValidException exception) {
         Map<String, String> errorsMap = new HashMap<>();
@@ -27,32 +28,31 @@ public class ExceptionHandlerApp {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public Map<String, String> handleException(EntityNotFoundException exception) {
+    public String handleException(EntityNotFoundException exception, Model model) {
 
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error", "Nie znaleziono podanego obiektu w bazie.");
+        model.addAttribute("error", "Nie znaleziono podanego obiektu w bazie.");
 
-        log.warn("Entity not found exception was thrown.");
+        log.info("Entity not found exception was thrown.");
 
-        return errorsMap;
+        return "patient/search-patient";
     }
 
     @ExceptionHandler(PeselFormatException.class)
-    public Map<String, String> handleException(PeselFormatException exception) {
+    public String handleException(PeselFormatException exception, Model model) {
 
+        model.addAttribute("error", "Niepoprawny format numeru pesel.");
 
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error", "Niepoprawny format numeru pesel.");
+        log.info("Incorrect pesel format exception was thrown.");
 
-        log.warn("Incorrect pesel format exception was thrown.");
-
-        return errorsMap;
+        return "patient/search-patient";
     }
+
     @ExceptionHandler(TimeSlotUnavailableException.class)
-    public  Map<String ,String> handleTimeSlotUnavailableException(TimeSlotUnavailableException exception) {
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error","Wybrany termin jest juz zajety");
-        return errorsMap;
+    public String handleTimeSlotUnavailableException(TimeSlotUnavailableException exception, Model model) {
+
+        model.addAttribute("error", "Wybrany termin jest juz zajety");
+        return "visit/visit";
+
     }
 
 }

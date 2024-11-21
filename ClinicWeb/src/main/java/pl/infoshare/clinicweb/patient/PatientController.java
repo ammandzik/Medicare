@@ -11,8 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.advice.PeselFormatException;
 import pl.infoshare.clinicweb.doctor.DoctorDto;
 import pl.infoshare.clinicweb.doctor.DoctorService;
-import pl.infoshare.clinicweb.user.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +26,7 @@ public class PatientController {
     private final PatientService patientService;
 
     private final DoctorService doctorService;
+
 
     @GetMapping("/patient")
     public String patientForm(Model model) {

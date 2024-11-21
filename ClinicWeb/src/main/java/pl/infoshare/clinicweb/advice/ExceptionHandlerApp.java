@@ -13,8 +13,7 @@ import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
-public class ExceptionHandlerApp {
-
+class ExceptionHandlerApp {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleException(MethodArgumentNotValidException exception) {
@@ -54,5 +53,13 @@ public class ExceptionHandlerApp {
         return "visit/visit";
 
     }
+
+    @ExceptionHandler(UserEmailExistsException.class)
+    public String handleException(UserEmailExistsException exception, Model model) {
+
+        model.addAttribute("error", "Użytkownik o podanym adresie email już istnieje.");
+        return "user/registry";
+    }
+
 
 }

@@ -1,10 +1,16 @@
-package pl.infoshare.clinicweb.user;
+package pl.infoshare.clinicweb.user.login;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.infoshare.clinicweb.user.entity.User;
 
 @Controller
+@AllArgsConstructor
+@Slf4j
 public class LoginController {
 
     @GetMapping("/")
@@ -14,20 +20,23 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    String login(Model model) {
 
-        User user = getPrincipal();
+        var user = getPrincipal();
 
         if (user != null) {
+
+
+            log.info("User with email: {} was successfully logged in.", user.getEmail());
             return "redirect:/index";
+
         }
 
         return "user/login";
     }
 
     @GetMapping("/logout")
-    public String logout() {
-
+    String logout() {
 
         return "home/index";
 

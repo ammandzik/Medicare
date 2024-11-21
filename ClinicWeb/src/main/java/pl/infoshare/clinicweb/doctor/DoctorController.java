@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.patient.Address;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
 import java.util.List;
 import java.util.Optional;

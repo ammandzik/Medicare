@@ -109,7 +109,7 @@
                             oninvalid="setCustomValidity('Wybierz płeć')"
                             oninput="setCustomValidity('')">
                         <option value="" selected>----Wybierz płeć----</option>
-                        <option th:each="gender : ${T(pl.infoshare.clinicweb.user.Gender).values()}"
+                        <option th:each="gender : ${T(pl.infoshare.clinicweb.user.entity.Gender).values()}"
                                 th:value="${gender}"
                                 th:text="${gender.getDescription()}"></option>
                     </select>

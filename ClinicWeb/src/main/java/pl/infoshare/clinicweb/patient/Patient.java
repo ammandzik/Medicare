@@ -5,7 +5,7 @@ import lombok.Data;
 import pl.infoshare.clinicweb.clinic.Clinic;
 import pl.infoshare.clinicweb.doctor.Doctor;
 import pl.infoshare.clinicweb.patientCard.PatientCard;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.HashSet;
 import java.util.Set;

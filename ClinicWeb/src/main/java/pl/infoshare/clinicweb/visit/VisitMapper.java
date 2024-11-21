@@ -6,11 +6,11 @@ import pl.infoshare.clinicweb.doctor.Doctor;
 import pl.infoshare.clinicweb.patient.Patient;
 import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
-
 @Component
 @AllArgsConstructor
 
 public class VisitMapper {
+
 
     public VisitDto toVisitDto(Visit visit) {
 
@@ -77,7 +77,7 @@ public class VisitMapper {
         visit.setPatient(patient);
         visit.setDoctor(doctor);
 
+
         return visit;
     }
-
 }

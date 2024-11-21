@@ -1,16 +1,19 @@
 package pl.infoshare.clinicweb.advice;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import pl.infoshare.clinicweb.exception.validation.TimeSlotUnavailableException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@Slf4j
 class ExceptionHandlerApp {
-
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleException(MethodArgumentNotValidException exception) {
@@ -24,29 +27,38 @@ class ExceptionHandlerApp {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public Map<String, String> handleException(EntityNotFoundException exception) {
+    public String handleException(EntityNotFoundException exception, Model model) {
 
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error", "Nie znaleziono podanego obiektu w bazie.");
+        model.addAttribute("error", "Nie znaleziono podanego obiektu w bazie.");
 
-        return errorsMap;
+        log.info("Entity not found exception was thrown.");
+
+        return "patient/search-patient";
     }
 
     @ExceptionHandler(PeselFormatException.class)
-    public Map<String, String> handleException(PeselFormatException exception) {
+    public String handleException(PeselFormatException exception, Model model) {
 
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error", "Niepoprawny format numeru pesel.");
+        model.addAttribute("error", "Niepoprawny format numeru pesel.");
 
-        return errorsMap;
+        log.info("Incorrect pesel format exception was thrown.");
+
+        return "patient/search-patient";
+    }
+
+    @ExceptionHandler(TimeSlotUnavailableException.class)
+    public String handleTimeSlotUnavailableException(TimeSlotUnavailableException exception, Model model) {
+
+        model.addAttribute("error", "Wybrany termin jest juz zajety");
+        return "visit/visit";
+
     }
 
     @ExceptionHandler(UserEmailExistsException.class)
-    public Map<String, String> handleException(UserEmailExistsException exception) {
+    public String handleException(UserEmailExistsException exception, Model model) {
 
-        Map<String, String> errorsMap = new HashMap<>();
-        errorsMap.put("error", "Użytkownik o podanym adresie email już istnieje.");
-        return errorsMap;
+        model.addAttribute("error", "Użytkownik o podanym adresie email już istnieje.");
+        return "user/registry";
     }
 
 

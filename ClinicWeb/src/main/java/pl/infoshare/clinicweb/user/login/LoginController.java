@@ -13,6 +13,12 @@ import pl.infoshare.clinicweb.user.entity.User;
 @Slf4j
 public class LoginController {
 
+    @GetMapping("/")
+    public String getIndex() {
+
+        return "home/index";
+    }
+
     @GetMapping("/login")
     String login(Model model) {
 
@@ -26,13 +32,13 @@ public class LoginController {
 
         }
 
-        return "login";
+        return "user/login";
     }
 
     @GetMapping("/logout")
     String logout() {
 
-        return "index";
+        return "home/index";
 
     }
 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz rejestracji</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link th:href="@{/styles/newStyle.css}" rel="stylesheet"/>
+    <style>
+        body {
+            background-image: url('/images/pxfuel.jpg');
+            background-size: cover;
+        }
+        .container{
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
+</nav>
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-3 border-0">
+        <div class="card-body p-4">
+            <h3 class="card-title text-center mb-4">Rejestracja nowej wizyty</h3>
+
+            <form th:action="@{/visit}" th:method="post" th:object="${visit}">
+                <div class="mb-4">
+                    <label for="patientId" class="form-label fw-bold">Wybierz pacjenta</label>
+                    <select id="patientId" name="patientId" class="form-select" required
+                            oninvalid="this.setCustomValidity('Wybierz pacjenta')" oninput="this.setCustomValidity('')">
+                        <option value="" selected>---- WYBIERZ PACJENTA ----</option>
+                        <option th:each="patient : ${patients}"
+                                th:value="${patient.id}"
+                                th:text="${patient.name + ' ' + patient.surname + ' - Pesel: ' + patient.pesel}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="doctorId" class="form-label fw-bold">Wybierz lekarza</label>
+                    <select id="doctorId" name="doctorId" class="form-select" required
+                            oninvalid="this.setCustomValidity('Wybierz lekarza')" oninput="this.setCustomValidity('')">
+                        <option value="" selected>---- WYBIERZ LEKARZA ----</option>
+                        <option th:each="doctor : ${doctors}"
+                                th:value="${doctor.id}"
+                                th:text="${doctor.name + ' ' + doctor.surname + ' - Specjalizacja: ' + doctor.specialization}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="visitTime" class="form-label fw-bold">Data i godzina wizyty</label>
+                    <select id="visitTime" th:field="*{visitDate}" class="form-select" required>
+                        <option value="" selected>---- WYBIERZ DATĘ ----</option>
+                        <option th:each="time : ${availableTimes}"
+                                th:value="${time}"
+                                th:text="${{#temporals.format(time, 'dd-MM-yyyy HH:mm')}}">
+                        </option>
+                    </select>
+                    <div th:if="${errorMessage}" class="alert alert-danger">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 mt-4">Zarejestruj się</button>
+            </form>
+
+            <div th:if="${success}" class="mt-4 alert alert-success text-center" role="alert">
+                <p th:text="${success}">Sukces</p>
+            </div>
+            <div class="text-center mt-3">
+                <a class="btn btn-outline-primary mt-2" th:href="@{/}">Wróć do strony głównej</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<footer>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+</body>
+</html>

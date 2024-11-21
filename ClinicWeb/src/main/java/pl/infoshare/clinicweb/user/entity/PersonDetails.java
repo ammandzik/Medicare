@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
+import pl.infoshare.clinicweb.annotation.peselDuplicate.PeselDuplicateValidator;
 import java.time.LocalDate;
 
 @Data
@@ -27,6 +27,7 @@ public class PersonDetails {
     private String phoneNumber;
     @NotEmpty(message = "Pole nie może być puste")
     @Pattern(regexp = "[0-9]{11}", message = "Pole musi zawierać 11 cyfr. ")
+    @PeselDuplicateValidator
     private String pesel;
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)

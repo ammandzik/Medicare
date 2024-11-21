@@ -23,5 +23,4 @@ public class Address {
     private String houseNumber;
     @Pattern(regexp = "[0-9]{0,6}", message = "Pole musi zawierać same cyfry. ")
     private String flatNumber;
-
 }

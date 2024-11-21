@@ -48,6 +48,11 @@ public class PatientService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Patient not found with pesel %s", pesel)));
     }
 
+    public boolean existsByPesel(String pesel) {
+
+        return patientRepository.findByPesel(pesel).isEmpty() ? false : true;
+    }
+
     public List<PatientDto> findAllPatients() {
         return patientRepository.findAll()
                 .stream()

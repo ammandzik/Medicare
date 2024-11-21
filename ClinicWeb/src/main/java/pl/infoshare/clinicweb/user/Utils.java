@@ -2,10 +2,6 @@ package pl.infoshare.clinicweb.user;
 
 import pl.infoshare.clinicweb.advice.PeselFormatException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 public class Utils {
 
     public static boolean hasPeselCorrectDigits(String pesel) {
@@ -26,7 +22,7 @@ public class Utils {
 
             return modulo == 0 || calculatedDigits == checkDigit;
 
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
 
             throw new PeselFormatException(pesel);
         }

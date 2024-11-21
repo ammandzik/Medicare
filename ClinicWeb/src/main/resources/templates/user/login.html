@@ -36,13 +36,16 @@
 
             <div class="input-group">
                 <i class="fas fa-user text-info"></i>
-                <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+                <input type="text" name="email" placeholder="Email użytkownika" required>
             </div>
 
 
             <div class="input-group">
                 <i class="fas fa-lock text-info"></i>
                 <input type="password" name="password" placeholder="Hasło" required>
+            </div>
+            <div th:align="center" th:if="${success}" class="mt-4 alert alert-success" role="alert">
+                <p th:text="${success}">Sukces</p>
             </div>
 
 

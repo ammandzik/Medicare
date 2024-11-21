@@ -54,7 +54,6 @@ public class UserService implements UserDetailsService {
 
     public void saveUser(UserDto user) {
 
-        user.setRole(Role.PATIENT);
         var appUser = userMapper.toEntity(user);
         userRepository.save(appUser);
         log.info("User patient saved with ID: {}", appUser.getId());

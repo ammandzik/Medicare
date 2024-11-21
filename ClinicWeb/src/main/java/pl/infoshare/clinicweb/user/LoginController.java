@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    @GetMapping("/")
+    public String getIndex() {
+
+        return "home/index";
+    }
+
     @GetMapping("/login")
     public String login() {
 
@@ -16,14 +22,14 @@ public class LoginController {
             return "redirect:/index";
         }
 
-        return "login";
+        return "user/login";
     }
 
     @GetMapping("/logout")
     public String logout() {
 
 
-        return "index";
+        return "home/index";
 
     }
 

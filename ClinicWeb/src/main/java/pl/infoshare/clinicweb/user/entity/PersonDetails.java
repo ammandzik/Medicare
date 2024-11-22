@@ -16,11 +16,11 @@ public class PersonDetails {
 
     @NotEmpty(message = "Pole nie może być puste")
     @Size(min = 2, max = 20, message = "Pole musi zawierać od 2 do 20 znaków.")
-    @Pattern(regexp = "[\\p{IsAlphabetic}\\d]", message = "Pole musi składać się z samych liter")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$", message = "Pole musi składać się z samych liter")
     private String name;
     @NotEmpty(message = "Pole nie może być puste")
     @Size(min = 2, max = 20, message = "Pole musi zawierać od 2 do 20 znaków.")
-    @Pattern(regexp = "[\\p{IsAlphabetic}\\d]", message = "Pole musi składać się z samych liter")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$", message = "Pole musi składać się z samych liter")
     private String surname;
     @NotEmpty(message = "Pole nie może być puste")
     @Pattern(regexp = "^\\d{9}$", message = "Pole musi składać się z 9 cyfr.")

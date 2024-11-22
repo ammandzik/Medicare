@@ -78,10 +78,8 @@
                 <textarea class="form-control form-control-sm" id="treatment" th:field="*{treatment}" rows="2" placeholder="Wprowadź zalecane leczenie"></textarea>
             </div>
             <div class="col-auto">
-                <a th:href="@{/patient-appointments(id=${patientCard.patientId})}" class="btn btn-primary" role="button"
-                   aria-pressed="true">
-                    Zapisz
-                </a>
+                <a th:href="@{/patient-appointments(id=${patientCard.patientId})}"></a>
+                <button type="submit" class="btn btn-primary">Zapisz</button>
             </div>
         </form>
     </div>

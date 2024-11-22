@@ -13,11 +13,7 @@ import pl.infoshare.clinicweb.user.PersonDetails;
 public class VisitMapper {
 
 
-    public VisitDto toVisitDto(Visit visit) {
-
-
-
-        VisitDto visitDto = new VisitDto();
+    public VisitDto toVisitDto(Visit visit) {VisitDto visitDto = new VisitDto();
 
         visitDto.setId(visit.getId());
         visitDto.setVisitDate(visit.getVisitDate());

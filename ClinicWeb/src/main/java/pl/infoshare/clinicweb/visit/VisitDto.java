@@ -1,13 +1,17 @@
 package pl.infoshare.clinicweb.visit;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.infoshare.clinicweb.doctor.Specialization;
+
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class VisitDto {
 
     private Long id;

@@ -10,12 +10,7 @@ import pl.infoshare.clinicweb.user.PersonDetails;
 public class DoctorMapper {
 
     public DoctorDto toDto(Doctor doctor) {
-//
-//        DoctorDto doctorDto = new DoctorDto();
-//        doctorDto.setId(doctor.getId());
-//        doctorDto.setName(doctor.getDetails().getName());
-//        doctorDto.setSurname(doctor.getDetails().getSurname());
-//        doctorDto.setSpecialization(doctor.getSpecialization());
+
         return DoctorDto.builder()
                 .name(doctor.getDetails().getName())
                 .id(doctor.getId())

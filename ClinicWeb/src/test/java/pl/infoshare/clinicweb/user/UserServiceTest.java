@@ -41,7 +41,7 @@ public class UserServiceTest {
         when(userRepository.findUserByEmail("marek.kozlowski@wp.pl"))
                 .thenReturn(Optional.ofNullable(user));
 
-        var savedUser = service.findUserWithEmail(user.getEmail()).get();
+        var savedUser = service.findUserByEmail(user.getEmail());
 
         assertThat(savedUser).isNotNull();
     }

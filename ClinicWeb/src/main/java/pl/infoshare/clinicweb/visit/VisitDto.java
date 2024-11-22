@@ -9,9 +9,6 @@ import pl.infoshare.clinicweb.doctor.Specialization;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class VisitDto {
 
     private Long id;

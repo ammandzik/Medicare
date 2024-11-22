@@ -13,11 +13,12 @@ import pl.infoshare.clinicweb.user.PersonDetails;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "patients")
 public class Patient {
 

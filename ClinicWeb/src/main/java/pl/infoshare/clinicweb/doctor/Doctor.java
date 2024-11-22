@@ -2,6 +2,7 @@ package pl.infoshare.clinicweb.doctor;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.infoshare.clinicweb.patient.Address;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "doctors")
+@Builder
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,7 +6,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.infoshare.clinicweb.annotation.peselDuplicate.PeselDuplicateValidator;
 import pl.infoshare.clinicweb.patient.PatientService;
 
@@ -14,6 +17,9 @@ import java.time.LocalDate;
 
 @Data
 @Embeddable
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PersonDetails {
 
     @NotEmpty(message = "Pole nie może być puste")

@@ -1,7 +1,10 @@
 package pl.infoshare.clinicweb.patient;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.infoshare.clinicweb.clinic.Clinic;
 import pl.infoshare.clinicweb.doctor.Doctor;
 import pl.infoshare.clinicweb.patientCard.PatientCard;
@@ -11,8 +14,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "patients")
 public class Patient {
 

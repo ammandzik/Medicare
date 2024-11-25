@@ -39,31 +39,60 @@
                 </li>
             </div>
 
-                <div sec:authorize="hasRole('ADMIN')">
-                    <li class="nav-item">
-                        <a class="nav-link enable" th:href="@{doctor}" tabindex="-1" aria-disabled="true">Utwórz konto
-                            nowego
-                            lekarza</a>
-                    </li>
-                </div>
-
-                <div>
-                    <li class="nav-item">
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link enable" th:href="@{doctor}" tabindex="-1" aria-disabled="true">Utwórz konto
+                        nowego
+                        lekarza</a>
+                </li>
+            </div>
+            <div>
+                <li class="nav-item">
+                    <span sec:authorize="isAnonymous()">
+                            <a class="nav-link enable" th:href="@{/register}" tabindex="-1" aria-disabled="true">Zarejestruj się</a>
+                    </span>
+            </div>
+            <div>
+                <li class="nav-item">
+                    <span sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link enable" th:href="@{/register}" tabindex="-1" aria-disabled="true">Tworzenie użytkownika</a>
+                    </span>
+            </div>
+            <div>
+                <li class="nav-item">
                         <span sec:authorize="isAnonymous()">
                             <a class="nav-link enable" th:href="@{/login}" tabindex="-1" aria-disabled="true">Zaloguj się</a>
                         </span>
 
-                        <span sec:authorize="isAuthenticated()">
+                    <span sec:authorize="isAuthenticated()">
                             <a class="nav-link enable" th:href="@{/logout}" tabindex="-1" aria-disabled="true">Wyloguj się</a>
                         </span>
-                    </li>
-                </div>
-
-                <li class="nav-ite ">
-                    <div class="nav-link enable">
-                        <div class="current-time text-white text-end" id="currentTime"></div>
-                    </div>
                 </li>
+            </div>
+
+            <div>
+                <li class="nav-item">
+                    <span sec:authorize="isAuthenticated()">
+                        <a class="nav-link enable">Zalogowana/y:
+                            <span th:text="${#authentication.name}">[Użytkownik]</span>
+                        </a>
+                    </span>
+                </li>
+                <div>
+
+                    </p>
+
+
+                </div>
+                </span>
+                </li>
+            </div>
+
+            <li class="nav-ite ">
+                <div class="nav-link enable">
+                    <div class="current-time text-white text-end" id="currentTime"></div>
+                </div>
+            </li>
         </ul>
     </div>
     <script>

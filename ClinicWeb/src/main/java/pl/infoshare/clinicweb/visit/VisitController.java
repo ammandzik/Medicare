@@ -61,7 +61,7 @@ public class VisitController {
         if (visitBindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "Wystąpiły błędy w formularzu. Proszę poprawić poniższe błędy.");
             prepareVisitFormData(model);
-            return "visit";
+            return "visit/visit";
         }
 
         LocalDateTime visitDateTime;
@@ -71,7 +71,7 @@ public class VisitController {
         } catch (DateTimeParseException e) {
             model.addAttribute("errorMessage", "Nieprawidłowy format daty. Proszę wybrać poprawną datę i godzinę.");
             prepareVisitFormData(model);
-            return "visit";
+            return "visit/visit";
         }
 
         visit.setVisitTime(visitDateTime);
@@ -84,7 +84,7 @@ public class VisitController {
         } catch (TimeSlotUnavailableException e) {
             model.addAttribute("errorMessage", e.getMessage());
             prepareVisitFormData(model);
-            return "visit";
+            return "visit/visit";
         }
 
         if (doctorId != null) {
@@ -114,7 +114,7 @@ public class VisitController {
         model.addAttribute("doctors", doctors);
         model.addAttribute("patients", patients);
 
-        return "visit";
+        return "visit/visit";
     }
 
     @GetMapping(value = "/visits")
@@ -143,8 +143,7 @@ public class VisitController {
         model.addAttribute("totalElements", totalElements);
         model.addAttribute("visits", visits);
 
-
-        return "visits";
+        return "visit/visits";
     }
 
 

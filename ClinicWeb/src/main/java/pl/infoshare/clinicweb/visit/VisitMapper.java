@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.infoshare.clinicweb.doctor.Doctor;
 import pl.infoshare.clinicweb.patient.Patient;
-import pl.infoshare.clinicweb.user.PersonDetails;
-
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 @Component
 @AllArgsConstructor
@@ -13,7 +12,10 @@ import pl.infoshare.clinicweb.user.PersonDetails;
 public class VisitMapper {
 
 
-    public VisitDto toVisitDto(Visit visit) {VisitDto visitDto = new VisitDto();
+    public VisitDto toVisitDto(Visit visit) {
+
+
+        VisitDto visitDto = new VisitDto();
 
         visitDto.setId(visit.getId());
         visitDto.setVisitDate(visit.getVisitDate());
@@ -46,7 +48,6 @@ public class VisitMapper {
         if (visitDto == null) {
             throw new IllegalArgumentException("VisitDto cannot be null");
         }
-
 
 
         Patient patient = new Patient();

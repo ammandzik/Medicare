@@ -7,14 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.infoshare.clinicweb.advice.ExceptionHandlerApp;
+import pl.infoshare.clinicweb.advice.PeselFormatException;
 import pl.infoshare.clinicweb.doctor.DoctorDto;
 import pl.infoshare.clinicweb.doctor.DoctorService;
-import pl.infoshare.clinicweb.user.PersonDetails;
-import pl.infoshare.clinicweb.advice.PeselFormatException;
 import pl.infoshare.clinicweb.user.Utils;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +26,6 @@ public class PatientController {
     private final PatientService patientService;
 
     private final DoctorService doctorService;
-    private final ExceptionHandlerApp exceptionHandlerApp;
-    private final View error;
 
 
     @GetMapping("/patient")
@@ -41,7 +37,7 @@ public class PatientController {
         model.addAttribute("address", new Address());
         model.addAttribute("doctors", doctors);
 
-        return "patient";
+        return "patient/patient";
     }
 
     @PostMapping("/patient")
@@ -59,7 +55,7 @@ public class PatientController {
 
             model.addAttribute("peselError", "Wprowadzony numer PESEL jest niepoprawny");
 
-            return "patient";
+            return "patient/patient";
 
         } else {
 
@@ -104,14 +100,14 @@ public class PatientController {
         model.addAttribute("totalElements", totalElements);
         model.addAttribute("listPatient", patients);
 
-        return "patients";
+        return "patient/patients";
     }
 
 
     @GetMapping("/search")
     public String searchForm(Model model) {
         model.addAttribute("patient", new Patient());
-        return "search";
+        return "patient/search";
     }
 
     @PostMapping("/search")
@@ -124,7 +120,7 @@ public class PatientController {
         } else {
             model.addAttribute("error", "Patient not found");
         }
-        return "search";
+        return "patient/search";
     }
 
     @PostMapping("/update-patient")
@@ -136,7 +132,7 @@ public class PatientController {
 
         patientService.updatePatient(patient, address);
         redirectAttributes.addFlashAttribute("success", "Zaktualizowano dane pacjenta.");
-        return "redirect:patients";
+        return "redirect:/patients";
     }
 
     @GetMapping("/update-patient")
@@ -147,14 +143,14 @@ public class PatientController {
         model.addAttribute("patient", patientService.findById(id));
 
 
-        return "update-patient";
+        return "patient/update-patient";
     }
 
     @GetMapping("/search-patient")
     public String searchPatientByPesel(Model model, @RequestParam(value = "pesel", required = false) String pesel) {
 
 
-        if (!Utils.hasPeselCorrectDigits(pesel)) {
+        if (!Utils.hasPeselCorrectDigits(pesel) || pesel == null) {
 
             throw new PeselFormatException(pesel);
 
@@ -164,7 +160,8 @@ public class PatientController {
             model.addAttribute("patientByPesel", patientByPesel);
         }
 
-        return "search-patient";
+        return "patient/search-patient";
+
     }
 
     @PostMapping("/delete-patient")
@@ -184,7 +181,7 @@ public class PatientController {
 
         model.addAttribute("patient", patientById);
 
-        return "delete-patient";
+        return "patient/delete-patient";
     }
 
 

@@ -1,8 +1,8 @@
-package pl.infoshare.clinicweb.user;
+package pl.infoshare.clinicweb.user.entity;
 
 public enum Role {
-    PATIENT("Patient"),
-    DOCTOR("Doctor"),
+    PATIENT("Pacjent"),
+    DOCTOR("Lekarz"),
     ADMIN("Admin");
 
     private final String roleDescription;
@@ -12,7 +12,6 @@ public enum Role {
         this.roleDescription = roleDescription;
 
     }
-
     public String getRoleDescription() {
 
         return roleDescription;

@@ -11,7 +11,6 @@ import lombok.Data;
 public class DoctorDto {
 
     private Long id;
-
     @NotBlank(message = "Pole nie może być puste")
     private String name;
     @NotBlank(message = "Pole nie może być puste")

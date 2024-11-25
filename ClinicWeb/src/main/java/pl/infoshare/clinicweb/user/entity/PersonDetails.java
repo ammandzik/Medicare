@@ -1,4 +1,4 @@
-package pl.infoshare.clinicweb.user;
+package pl.infoshare.clinicweb.user.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -11,8 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.infoshare.clinicweb.annotation.peselDuplicate.PeselDuplicateValidator;
-import pl.infoshare.clinicweb.patient.PatientService;
-
 import java.time.LocalDate;
 
 @Data
@@ -41,13 +39,5 @@ public class PersonDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private LocalDate setDateOfBirth(String pesel) {
-
-        LocalDate localDate = PatientService.decodeDateOfBirth(pesel);
-
-        return localDate;
-
-
-    }
 
 }

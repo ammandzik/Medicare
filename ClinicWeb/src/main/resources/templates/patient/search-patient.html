@@ -65,7 +65,7 @@
                     <a th:href="@{/update-patient(id=${patient.id})}"
                        class="btn btn-primary btn-sm active me-2" role="button" aria-pressed="true">Edytuj dane</a>
                     <form th:action="@{/delete-patient}" th:method="post" class="d-inline">
-                        <input type="hidden" name="id" th:value="${patient}">
+                        <input type="hidden" name="id" th:value="${patient.id}">
                         <button type="submit" class="btn btn-danger btn-sm active">Usuń</button>
                     </form>
                 </td>

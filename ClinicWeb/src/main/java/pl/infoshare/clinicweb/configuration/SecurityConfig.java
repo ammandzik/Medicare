@@ -1,20 +1,26 @@
 package pl.infoshare.clinicweb.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.infoshare.clinicweb.user.service.UserService;
 
-import static pl.infoshare.clinicweb.user.Role.ADMIN;
-import static pl.infoshare.clinicweb.user.Role.DOCTOR;
+import java.util.HashMap;
+import java.util.Map;
+
+import static pl.infoshare.clinicweb.user.entity.Role.ADMIN;
+import static pl.infoshare.clinicweb.user.entity.Role.DOCTOR;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -22,33 +28,38 @@ public class SecurityConfig {
             "/styles/**",
             "/images/**"};
 
+    private final UserService userService;
 
     @Bean
     PasswordEncoder passwordEncoder() {
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+        encoders.put("bcrypt", new BCryptPasswordEncoder());
 
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        var passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
+        passwordEncoder.setDefaultPasswordEncoderForMatches(NoOpPasswordEncoder.getInstance());
+
+        return passwordEncoder;
     }
 
     @Bean
-    InMemoryUserDetailsManager userDetailsManager(PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider authenticationProvider() {
 
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles(ADMIN.name())
-                .build();
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(passwordEncoder());
 
-        UserDetails doctor = User.withUsername("doctor")
-                .password(passwordEncoder.encode("doctor"))
-                .roles(DOCTOR.name())
-                .build();
+        return provider;
 
-        return new InMemoryUserDetailsManager(admin, doctor);
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("register/admin").hasRole(ADMIN.name())
+                        .requestMatchers("register/doctor").hasRole(ADMIN.name())
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/update-patient**",
                                 "/update-doctor**",
@@ -68,6 +79,7 @@ public class SecurityConfig {
                         .hasAnyRole(ADMIN.name(), DOCTOR.name())
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
+                        .usernameParameter("email")
                         .defaultSuccessUrl("/", true)
                         .loginPage("/login")
                         .permitAll()

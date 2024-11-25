@@ -108,3 +108,13 @@ INSERT INTO patients_cards (date_of_visit, doctor_id, id, patient_id, diagnosis,
 ('2024-12-23 16:00:00', 3, 29, 9, 'Diabetes', 'Sugar levels checked', 'Fatigue', 'Insulin adjustment'),
 ('2024-12-25 11:00:00', 1, 30, 10, 'Flu', 'Standard treatment', 'Fever, cough', 'Flu meds');
 
+
+INSERT INTO users(email, password, role) VALUES
+("malwina.kozak@gmail.com", "proste1234", 'PATIENT'),
+("damian.pered@onet.pl", "Puszek123!", 'DOCTOR'),
+("melania.halinowska@wp.pl", "trampek123", 'PATIENT'),
+("danuta.kopec@onet.pl", "Puszek123!", 'DOCTOR'),
+("krystian.krawiec@onet.pl", "Puszek123!", 'DOCTOR'),
+("admin@onet.pl", "admin", 'ADMIN');
+
+

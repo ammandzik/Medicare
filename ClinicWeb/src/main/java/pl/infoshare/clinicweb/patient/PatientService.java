@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.infoshare.clinicweb.patientCard.PatientCardRepository;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 import pl.infoshare.clinicweb.visit.Visit;
 import pl.infoshare.clinicweb.visit.VisitRepository;
 
@@ -67,13 +67,7 @@ public class PatientService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("id"));
         Page<Patient> entities = patientRepository.findAll(pageable);
 
-        Page<PatientDto> patients = entities.map(patient -> {
-            PatientDto patientDto = patientMapper.toDto(patient);
-
-            return patientDto;
-        });
-
-        return patients;
+        return entities.map(patientMapper::toDto);
     }
 
     public void updatePatient(PatientDto patientDto, Address address) {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.patient.Address;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +68,7 @@ public class DoctorController {
         model.addAttribute("listDoctor", doctors);
 
 
-        return "doctors";
+        return "doctor/doctors";
     }
 
     @GetMapping("/doctor")
@@ -77,7 +77,7 @@ public class DoctorController {
         model.addAttribute("personDetails", new PersonDetails());
         model.addAttribute("address", new Address());
 
-        return "doctor";
+        return "doctor/doctor";
     }
 
     @PostMapping("/doctor")
@@ -92,7 +92,7 @@ public class DoctorController {
         if (detailsBinding.hasErrors() || addressBinding.hasErrors() || !Utils.hasPeselCorrectDigits(pesel)) {
 
             model.addAttribute("peselError", "Wprowadzony numer PESEL jest niepoprawny.");
-            return "doctor";
+            return "doctor/doctor";
 
         } else {
 
@@ -109,7 +109,7 @@ public class DoctorController {
     @GetMapping("/search-doctor")
     public String searchDoctorByPesel(@ModelAttribute Doctor doctor) {
 
-        return "search-doctor";
+        return "doctor/search-doctor";
     }
 
     @PostMapping("/search-doctor")
@@ -118,7 +118,8 @@ public class DoctorController {
         DoctorDto doctorById = doctorService.findById(id);
 
         model.addAttribute("searchForId", doctorById);
-        return "search-doctor";
+
+        return "doctor/search-doctor";
     }
 
     @GetMapping("/update-doctor")
@@ -126,7 +127,7 @@ public class DoctorController {
 
         model.addAttribute("doctor", doctorService.findById(id));
 
-        return "update-doctor";
+        return "doctor/update-doctor";
     }
 
     @PostMapping("/update-doctor")
@@ -147,7 +148,7 @@ public class DoctorController {
         DoctorDto doctorById = doctorService.findById(id);
         model.addAttribute("doctor", doctorById);
 
-        return "delete-doctor";
+        return "doctor/delete-doctor";
     }
 
     @PostMapping("/delete-doctor")

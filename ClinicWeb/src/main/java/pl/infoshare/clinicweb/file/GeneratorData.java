@@ -6,8 +6,8 @@ import net.datafaker.Faker;
 import pl.infoshare.clinicweb.doctor.Specialization;
 import pl.infoshare.clinicweb.patient.Address;
 import pl.infoshare.clinicweb.patient.Patient;
-import pl.infoshare.clinicweb.user.Gender;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.Gender;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.Arrays;
 import java.util.List;

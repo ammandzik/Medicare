@@ -2,7 +2,7 @@ package pl.infoshare.clinicweb.doctor;
 
 import lombok.Builder;
 import org.springframework.stereotype.Component;
-import pl.infoshare.clinicweb.user.PersonDetails;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 
 @Component

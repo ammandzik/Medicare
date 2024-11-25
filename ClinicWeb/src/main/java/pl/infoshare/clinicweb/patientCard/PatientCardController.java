@@ -34,11 +34,11 @@ public class PatientCardController {
         model.addAttribute("visit", visit);
         model.addAttribute("patientCard", patientCardDTO);
 
-        return "patient-card";
+        return "patient/patient-card";
     }
 
 
-    @GetMapping("/detal-patient-appointments")
+    @GetMapping("/detail-patient-appointments")
     public String getDetailPatientAppointments(@RequestParam(value = "id", required = false) Long id, Model model) {
 
 
@@ -54,7 +54,7 @@ public class PatientCardController {
         model.addAttribute("patientAppointments", patientAppointments);
 
 
-        return "detal-patient-appointments";
+        return "patient/detail-patient-appointments";
     }
 
 
@@ -63,7 +63,7 @@ public class PatientCardController {
 
         List<PatientCard> patientAppointments = patientCardService.findAllPatientCardByPatientId(id);
         model.addAttribute("patientAppointments", patientAppointments);
-        return "patient-appointments";
+        return "patient/patient-appointments";
     }
 
     @PostMapping("/patient-card")
@@ -82,7 +82,7 @@ public class PatientCardController {
 
         patientCardService.patientCardSave(patientCard);
         redirectAttributes.addFlashAttribute("successMessage", "Karta pacjenta została pomyślnie zapisana!");
-        return "redirect:/patient-appointments";
+        return "patient/patient-appointments";
     }
 
 

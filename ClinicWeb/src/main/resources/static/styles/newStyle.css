@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    background-image: url('pxfuel.jpg');
+    background-image: url('/images/pxfuel.jpg');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -13,7 +13,7 @@ html, body {
     border-radius: 8px;
     margin: 10px auto;
     padding: 10px;
-   
+
     width: 100%;
 
 }

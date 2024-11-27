@@ -75,7 +75,7 @@ public class PatientCardController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", "Błąd zapisu karty pacjenta");
-            return "patient-card";
+            return "patient/patient-card";
         }
 
         PatientCard patientCard = patientCardMapper.toEntity(patientCardDTO);

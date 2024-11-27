@@ -22,11 +22,9 @@ public class LoginController {
     @GetMapping("/login")
     String login(Model model) {
 
-        var user = getPrincipal();
+        var user = getPrincipals();
 
         if (user != null) {
-
-
             log.info("User with email: {} was successfully logged in.", user.getEmail());
             return "redirect:/index";
 
@@ -34,20 +32,18 @@ public class LoginController {
 
         return "user/login";
     }
-
     @GetMapping("/logout")
     String logout() {
 
         return "home/index";
 
     }
-
-    private User getPrincipal() {
-        User user = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private User getPrincipals() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            return (User) authentication.getPrincipal();
         }
-        return user;
+        return null;
     }
 
 

@@ -62,6 +62,8 @@
 
 🔹Hibernate/JPA
 
+🔹SQL
+
 🔹Maven
 
 ## Status

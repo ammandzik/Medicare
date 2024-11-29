@@ -22,13 +22,16 @@ public class PatientMapper {
                 .build();
 
     }
+
     public Patient toEntity(PatientDto patientDto) {
         return Patient.builder()
+                .id(patientDto.getId())
                 .personDetails(PersonDetails.builder()
                         .name(patientDto.getName())
                         .surname(patientDto.getSurname())
                         .pesel(patientDto.getPesel())
-                        .phoneNumber(patientDto.getPhoneNumber()).build())
+                        .phoneNumber(patientDto.getPhoneNumber())
+                        .build())
                 .address(Address.builder()
                         .country(patientDto.getCountry())
                         .city(patientDto.getCity())
@@ -37,7 +40,6 @@ public class PatientMapper {
                         .houseNumber(patientDto.getHouseNumber())
                         .street(patientDto.getStreet())
                         .build())
-                .id(patientDto.getId())
                 .build();
     }
 }

@@ -74,12 +74,14 @@ public class PatientService {
 
     public void updatePatient(PatientDto patientDto, Address address) {
 
-        Patient patient = patientMapper.toEntity(patientDto);
+        Patient patient = patientRepository.findById(patientDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Pacjent o ID " + patientDto.getId() + " nie istnieje."));
         patient.setAddress(address);
 
-        patientRepository.save(patient);
 
+        patientRepository.save(patient);
     }
+
 
     @Transactional
     public void deletePatient(Long id) {

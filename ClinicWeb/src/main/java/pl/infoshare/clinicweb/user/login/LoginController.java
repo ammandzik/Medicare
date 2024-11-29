@@ -15,7 +15,6 @@ public class LoginController {
 
     @GetMapping("/")
     public String getIndex() {
-
         return "home/index";
     }
 
@@ -27,17 +26,23 @@ public class LoginController {
         if (user != null) {
             log.info("User with email: {} was successfully logged in.", user.getEmail());
             return "redirect:/index";
-
         }
-
         return "user/login";
     }
+
     @GetMapping("/logout")
     String logout() {
+        var user = getPrincipals();
 
-        return "home/index";
-
+        if (user == null) {
+            log.warn("No user found during logout.");
+        } else {
+            log.info("Logging out user {}.", user.getEmail());
+        }
+        return "redirect:/login";
     }
+
+
     private User getPrincipals() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof User) {

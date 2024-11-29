@@ -69,13 +69,21 @@ public class PatientService {
         return entities.map(patientMapper::toDto);
     }
 
+    @Transactional
     public void updatePatient(PatientDto patientDto, Address address) {
 
-        Patient patient = patientMapper.toEntity(patientDto);
-        patient.setAddress(address);
+        patientRepository.findById(patientDto.getId())
+                .ifPresent(patient -> {
 
-        patientRepository.save(patient);
+                    patient.setId(patientDto.getId());
+                    patient.getPersonDetails().setName(patientDto.getName());
+                    patient.getPersonDetails().setSurname(patientDto.getSurname());
+                    patient.getPersonDetails().setPesel(patientDto.getPesel());
 
+                    patient.setAddress(address);
+
+                    patientRepository.save(patient);
+                });
     }
 
     @Transactional

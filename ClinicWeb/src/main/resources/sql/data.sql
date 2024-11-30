@@ -1,20 +1,24 @@
-INSERT INTO patients (NAME, SURNAME, PHONE_NUMBER, PESEL, CITY, COUNTRY, STREET, FLAT_NUMBER, HOUSE_NUMBER, ZIP_CODE,
+INSERT INTO patients ( NAME, SURNAME, PHONE_NUMBER, PESEL, CITY, COUNTRY, STREET, FLAT_NUMBER,
+                      HOUSE_NUMBER, ZIP_CODE,
                       GENDER)
 VALUES ('Adam', 'Nowak', '606536999', 95102826883, 'Kraków', 'Niemcy', 'Murarska', 8, 39, '30-612', 'MALE'),
        ('Malwina', 'Paskal', '505-666-158', 92042326741, 'Olkusz', 'Polska', 'Górna', 12, 34, '32-300', 'FEMALE'),
        ('Roman', 'Padzioch', '606536999', 94121031317, 'Gorlice', 'Niemcy', 'Wałowa', 8, 11, '30-454', 'MALE'),
        ('Marek', 'Knedel', '606536999', 60051571852, 'Poznań', 'Polska', 'Ceglana', 8, 3, '30-612', 'MALE'),
-       ('Aneta', 'Zając', '606536999', 51090658006, 'Chrzanów', 'Polska', 'Armii Krajowej', 19, 65, '30-455', 'FEMALE'),
+       ('Aneta', 'Zając', '606536999', 51090658006, 'Chrzanów', 'Polska', 'Armii Krajowej', 19, 65, '30-455',
+        'FEMALE'),
        ('Leokadia', 'Kreda', '606536999', 14291226021, 'POZNAŃ', 'Polska', 'Deszczowa', 3, 454, '30-554', 'FEMALE'),
        ('Marek', 'Lech', '606536999', 59110657259, 'Gniew', 'Stany Zjednoczone', 'Parkowa', 8, 39, '30-612', 'MALE'),
        ('Jeanetta', 'Janiak', '606536999', 53051386124, 'Gorlice', 'Polska', 'Komunikacyjna', 5, 45, '30-836',
         'FEMALE'),
        ('Trenton', 'Kacprzak', '606536999', 00261533817, 'Zakopane', 'Polska', 'Parkowa', 32, 65, '33-112', 'MALE'),
        ('Jose', 'Jurek', '606536999', 97061506655, 'Chrzanów', 'Polska', 'Wenedy', 8, 39, '30-612', 'MALE'),
-       ('Corinna', 'Trzeciak', '754-342-322', 07311479747, 'Łódz', 'Polska', 'Szymborskiej', 8, 39, '36-223', 'FEMALE'),
+       ('Corinna', 'Trzeciak', '754-342-322', 07311479747, 'Łódz', 'Polska', 'Szymborskiej', 8, 39, '36-223',
+        'FEMALE'),
        ('Hwa', 'Wysocki', '233-122-776', 79081310304, 'Gniew', 'Tajlandia', 'Krajowa', 83, 39, '30-612', 'FEMALE'),
        ('Randy', 'Kopeć', '546-344-333', 40092387210, 'Brzesko', 'Erytrea', 'Warta', 91, 39, '31-352', 'MALE'),
-       ('Chasity', 'Dominiak', '111-222-333', 85011736827, 'Bochnia', 'Holandia', 'Metrowa', 5, 39, '33-333', 'MALE'),
+       ('Chasity', 'Dominiak', '111-222-333', 85011736827, 'Bochnia', 'Holandia', 'Metrowa', 5, 39, '33-333',
+        'MALE'),
        ('Chong', 'Herman', '453-434-222', 66060480592, 'Nowy Wiśnicz', 'Włochy', 'Jerzmanowskiego', 67, 39, '30-876',
         'MALE');
 
@@ -119,4 +123,6 @@ VALUES ('malwina.kozak@gmail.com', 'proste1234', 'PATIENT'),
        ('krystian.krawiec@onet.pl', 'Puszek123!', 'DOCTOR'),
        ('admin@onet.pl', 'admin', 'ADMIN');
 
+INSERT INTO clinic(id, city, clinic_name, country, flat_number, house_number, street, zip_code)
+values (1, 'Gdańsk', 'MEDICARE', 'POLSKA', 11, 1, 'Kolorowankowa', '80 - 500')
 

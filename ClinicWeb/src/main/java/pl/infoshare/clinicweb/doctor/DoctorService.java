@@ -56,8 +56,17 @@ public class DoctorService {
     }
 
     public void updateDoctor(DoctorDto doctorDto, Address address) {
-
+        DoctorDto byId = findById(doctorDto.getId());
         Doctor doctor = doctorMapper.toEntity(doctorDto);
+        address.setCity(byId.getCity());
+        address.setZipCode(byId.getZipCode());
+        address.setCountry(byId.getCountry());
+        address.setStreet(byId.getStreet());
+        address.setHouseNumber(byId.getHouseNumber());
+        address.setFlatNumber(byId.getFlatNumber());
+        doctor.setOnline(true);
+        boolean availability = !doctor.isAvailability();
+        doctor.setAvailability(availability);
         doctor.setAddress(address);
 
         doctorRepository.save(doctor);

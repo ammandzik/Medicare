@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.patient.Address;
 import pl.infoshare.clinicweb.user.entity.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -132,7 +133,7 @@ public class DoctorController {
 
     @PostMapping("/update-doctor")
     public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, Model model,
-                             Address address, RedirectAttributes redirectAttributes) {
+                             Address address, RedirectAttributes redirectAttributes, PersonDetails personDetails) {
 
         doctorService.updateDoctor(doctor, address);
         model.addAttribute("doctor", doctor);

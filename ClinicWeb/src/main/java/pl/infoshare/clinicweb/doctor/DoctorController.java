@@ -2,6 +2,7 @@ package pl.infoshare.clinicweb.doctor;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.util.stream.IntStream;
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class DoctorController {
 
     private final DoctorService doctorService;
@@ -89,22 +91,34 @@ public class DoctorController {
                                        @RequestParam("pesel") String pesel,
                                        RedirectAttributes redirectAttributes, Model model) {
 
+        log.info("Received doctor form submission with specialization: {}, pesel: {}", specialization, pesel);
 
         if (detailsBinding.hasErrors() || addressBinding.hasErrors() || !Utils.hasPeselCorrectDigits(pesel)) {
+            log.warn("Validation errors occurred during doctor form submission.");
+
+            if (detailsBinding.hasErrors()) {
+                log.debug("Details binding errors: {}", detailsBinding.getAllErrors());
+            }
+            if (addressBinding.hasErrors()) {
+                log.debug("Address binding errors: {}", addressBinding.getAllErrors());
+            }
+            if (!Utils.hasPeselCorrectDigits(pesel)) {
+                log.debug("Invalid PESEL: {}", pesel);
+            }
 
             model.addAttribute("peselError", "Wprowadzony numer PESEL jest niepoprawny.");
             return "doctor/doctor";
 
         } else {
+            log.info("Validation successful, creating doctor with details: {}", doctorDetails);
 
             redirectAttributes.addFlashAttribute("success", "Utworzono nowego lekarza w bazie.");
-
             doctorService.setDoctorAttributes(doctor, doctorDetails, doctorAddress, specialization);
             doctorService.addDoctor(doctor);
 
+            log.info("Doctor successfully added to the database.");
             return "redirect:/doctor";
         }
-
     }
 
     @GetMapping("/search-doctor")

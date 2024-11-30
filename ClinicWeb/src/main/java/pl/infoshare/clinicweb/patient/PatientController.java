@@ -74,7 +74,7 @@ public class PatientController {
     public String listPatients(Model model, @RequestParam(value = "pesel", required = false) String pesel,
                                @RequestParam(value = "page", required = false) Optional<Integer> page) {
         int currentPage = page.orElse(1);
-        log.info("Wywołano listę pacjentów. Strona: {}, pesel: {}", currentPage, pesel);
+        log.info("Wywołano listę pacjentów. Strona: {},", currentPage);
 
         Page<PatientDto> patientPage = patientService.findPage(currentPage);
         int totalPages = patientPage.getTotalPages();
@@ -115,10 +115,10 @@ public class PatientController {
 
     @PostMapping("/update-patient")
     public String editPatient(@ModelAttribute("patient") PatientDto patient,
-                              Model model, Address address, RedirectAttributes redirectAttributes) {
-        log.info("Rozpoczęto aktualizację danych pacjenta: {}", patient);
+                              Model model, Address address, RedirectAttributes redirectAttributes, PersonDetails personDetails) {
+        log.info("Rozpoczęto aktualizację danych pacjenta: {}", patient.getId());
         try {
-            patientService.updatePatient(patient, address);
+            patientService.updatePatient(patient, address, personDetails);
             redirectAttributes.addFlashAttribute("success", "Zaktualizowano dane pacjenta.");
             log.info("Zaktualizowano dane pacjenta: {}", patient.getId());
         } catch (Exception e) {

@@ -72,11 +72,12 @@ public class PatientService {
         return entities.map(patientMapper::toDto);
     }
 
-    public void updatePatient(PatientDto patientDto, Address address) {
+    public void updatePatient(PatientDto patientDto, Address address, PersonDetails personDetails) {
 
         Patient patient = patientRepository.findById(patientDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Pacjent o ID " + patientDto.getId() + " nie istnieje."));
         patient.setAddress(address);
+        patient.setPersonDetails(personDetails);
 
 
         patientRepository.save(patient);

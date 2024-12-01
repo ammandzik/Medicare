@@ -76,11 +76,9 @@ public class DoctorController {
     @GetMapping("/doctor")
     public String doctorForm(Model model) {
 
-        log.info("Invoked doctorForm method");
         model.addAttribute("personDetails", new PersonDetails());
-        log.info("Added attribute personDetails");
         model.addAttribute("address", new Address());
-        log.info("Added attribute address");
+        log.info("Opening new doctor creation form");
         return "doctor/doctor";
     }
 
@@ -151,24 +149,23 @@ public class DoctorController {
         log.info("Added attribute doctor with details for id: {}", id);
         return "doctor/update-doctor";
     }
+
     @PostMapping("/update-doctor")
     public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, Model model,
                              Address address, RedirectAttributes redirectAttributes, PersonDetails personDetails) {
         log.info("Invoked editDoctor method");
-        doctorService.updateDoctor(doctor, address);
-        log.info("Updated doctor with id: {}", doctor.getId());
-
-        model.addAttribute("doctor", doctor);
-        log.info("Added attribute doctor");
-
-        model.addAttribute("address", address);
-        log.info("Added attribute address");
-
-        redirectAttributes.addFlashAttribute("success", "Doctor data updated successfully.");
-        log.info("Added flash attribute success");
-
+        try {
+            doctorService.updateDoctor(doctor, address);
+            model.addAttribute("doctor", doctor);
+            model.addAttribute("address", address);
+            redirectAttributes.addFlashAttribute("success", "Doctor data updated successfully.");
+            log.info("Updated doctor with id: {}", doctor.getId());
+        } catch (Exception e) {
+            log.error("error update doctor with id:  {}", doctor.getId());
+        }
         return "redirect:doctors";
     }
+
     @GetMapping("/delete-doctor")
     public String showDeleteDoctorForm(@RequestParam("id") long id, Model model) {
 
@@ -183,6 +180,7 @@ public class DoctorController {
         log.info("Added attribute doctor with details for id: {}", id);
         return "doctor/delete-doctor";
     }
+
     @PostMapping("/delete-doctor")
     public String deleteDoctor(@RequestParam("id") long id, RedirectAttributes redirectAttributes) {
 
@@ -199,7 +197,6 @@ public class DoctorController {
         }
         return "redirect:/doctors";
     }
-
 
 
 }

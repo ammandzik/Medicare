@@ -110,27 +110,35 @@ public class PatientCardController {
 
         return "patient/patient-appointments";
     }
+        @PostMapping("/patient-card")
+        public String savePatientCard(
+                @Valid @ModelAttribute("patientCard") PatientCardDTO patientCardDTO,
+                BindingResult bindingResult,
+                RedirectAttributes redirectAttributes,
+                Model model) {
 
+            if (bindingResult.hasErrors()) {
+                log.error("validation error patient card saved: {}", bindingResult.getAllErrors());
+                model.addAttribute("error", "Błąd zapisu karty pacjenta");
+                return "patient/patient-card";
+            }
 
-    @PostMapping("/patient-card")
-    public String savePatientCard(
-            @Valid @ModelAttribute("patientCard") PatientCardDTO patientCardDTO,
-            BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            Model model) {
+            try {
+                PatientCardDTO matchingPatientCard = patientCardService.findById(patientCardDTO.getPatientId());
+                PatientCard patientCard = patientCardMapper.toEntity(patientCardDTO);
+                model.addAttribute("matchingCard",matchingPatientCard);
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("error", "Błąd zapisu karty pacjenta");
-            return "patient/patient-card";
+                patientCardService.patientCardSave(patientCard);
+                log.info("Patient card success saved {}", patientCard.getId());
+                redirectAttributes.addFlashAttribute("successMessage", "Karta pacjenta została pomyślnie zapisana!");
+                return "patient/patient-appointments";
+
+            } catch (Exception e) {
+                log.error("error patient card saved", e);
+                model.addAttribute("error", "Wystąpił nieoczekiwany błąd podczas zapisu karty pacjenta");
+                return "patient/patient-card";
+            }
         }
-
-        PatientCard patientCard = patientCardMapper.toEntity(patientCardDTO);
-
-        patientCardService.patientCardSave(patientCard);
-        redirectAttributes.addFlashAttribute("successMessage", "Karta pacjenta została pomyślnie zapisana!");
-        return "patient/patient-appointments";
     }
 
-
-}
 

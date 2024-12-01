@@ -17,7 +17,6 @@ import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class PatientController {
 
     @GetMapping("/patient")
     public String patientForm(Model model) {
-        log.info("Wywołano formularz tworzenia pacjenta.");
+        log.info("Patient creation form retrieved.");
 
         model.addAttribute("personDetails", new PersonDetails());
         model.addAttribute("address", new Address());
@@ -74,7 +73,7 @@ public class PatientController {
     public String listPatients(Model model, @RequestParam(value = "pesel", required = false) String pesel,
                                @RequestParam(value = "page", required = false) Optional<Integer> page) {
         int currentPage = page.orElse(1);
-        log.info("Wywołano listę pacjentów. Strona: {},", currentPage);
+        log.info("Patient list retrieved. Page: {},", currentPage);
 
         Page<PatientDto> patientPage = patientService.findPage(currentPage);
         int totalPages = patientPage.getTotalPages();
@@ -116,13 +115,13 @@ public class PatientController {
     @PostMapping("/update-patient")
     public String editPatient(@ModelAttribute("patient") PatientDto patient,
                               Model model, Address address, RedirectAttributes redirectAttributes, PersonDetails personDetails) {
-        log.info("Rozpoczęto aktualizację danych pacjenta: {}", patient.getId());
+        log.info("Started updating patient data: {}", patient.getId());
         try {
             patientService.updatePatient(patient, address, personDetails);
             redirectAttributes.addFlashAttribute("success", "Zaktualizowano dane pacjenta.");
-            log.info("Zaktualizowano dane pacjenta: {}", patient.getId());
+            log.info("Patient data has been updated: {}", patient.getId());
         } catch (Exception e) {
-            log.error("Wystąpił błąd podczas aktualizacji danych pacjenta: {}", patient, e);
+            log.error("An error occurred while updating patient data: {}", patient.getId(), e);
             redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji danych pacjenta.");
         }
 
@@ -143,18 +142,17 @@ public class PatientController {
 
     @GetMapping("/search-patient")
     public String searchPatientByPesel(Model model, @RequestParam(value = "pesel", required = false) String pesel) {
-        log.info("Rozpoczęto wyszukiwanie pacjenta po numerze pesel: {}", pesel);
+        log.info("Started searching for patient by PESEL number: {}", pesel);
 
         if (pesel == null || !Utils.hasPeselCorrectDigits(pesel)) {
-            log.warn("Nieprawidłowy format numeru pesel: {}", pesel);
+            log.warn("Invalid PESEL number format: {}", pesel);
             throw new PeselFormatException(pesel);
         }
-
         PatientDto patientByPesel = patientService.findByPesel(pesel);
         if (patientByPesel != null) {
             model.addAttribute("patientByPesel", patientByPesel);
         } else {
-            log.info("Nie znaleziono pacjenta o numerze pesel: {}", pesel);
+            log.info("No patient found with PESEL number: {}", pesel);
             model.addAttribute("error", "Nie znaleziono pacjenta.");
         }
 
@@ -171,13 +169,13 @@ public class PatientController {
             if (patientById != null) {
                 patientService.deletePatient(id);
                 redirectAttributes.addFlashAttribute("success", "Pacjent został pomyślnie usunięty.");
-                log.info("Usunięto pacjenta o id: {}", id);
+                log.info("Patient with ID has been deleted: {}", id);
             } else {
-                log.warn("Nie znaleziono pacjenta o id: {}", id);
+                log.warn("No patient found with ID: {}", id);
                 redirectAttributes.addFlashAttribute("error", "Nie znaleziono pacjenta o podanym id.");
             }
         } catch (Exception e) {
-            log.error("Wystąpił błąd podczas usuwania pacjenta o id: {}", id, e);
+            log.error("An error occurred while deleting patient with ID: {}", id, e);
             redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas usuwania pacjenta.");
         }
 

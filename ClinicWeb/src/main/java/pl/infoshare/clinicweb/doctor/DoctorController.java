@@ -28,23 +28,22 @@ public class DoctorController {
 
     private final DoctorService doctorService;
 
+
     @GetMapping(value = "/doctors")
     public String listDoctors(@RequestParam(required = false) Specialization specialization, Model model,
-                              @RequestParam(value = "page")
-                              @ModelAttribute Optional<Integer> page,
-                              @RequestParam(value = "size")
-                              @ModelAttribute Optional<Integer> size) {
+                              @RequestParam(value = "page") @ModelAttribute Optional<Integer> page,
+                              @RequestParam(value = "size") @ModelAttribute Optional<Integer> size) {
 
+        log.info("Invoked listDoctors method");
         int currentPage = page.orElse(1);
-
         Page<DoctorDto> doctorPage;
 
         if (specialization == null) {
             doctorPage = doctorService.findAllPage(currentPage);
-
+            log.info("Searching all doctors on page: {}", currentPage);
         } else {
             doctorPage = doctorService.findDoctorBySpecialization(currentPage, specialization);
-
+            log.info("Searching doctors with specialization: {} on page: {}", specialization, currentPage);
         }
 
         long totalElements = doctorPage.getTotalElements();
@@ -57,8 +56,6 @@ public class DoctorController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-
-
         if (totalPages == 0) {
             totalPages = 1;
         }
@@ -70,18 +67,23 @@ public class DoctorController {
         model.addAttribute("totalElements", totalElements);
         model.addAttribute("listDoctor", doctors);
 
+        log.info("Found {} doctors, total {} pages", doctors.size(), totalPages);
 
         return "doctor/doctors";
     }
 
+
     @GetMapping("/doctor")
     public String doctorForm(Model model) {
 
+        log.info("Invoked doctorForm method");
         model.addAttribute("personDetails", new PersonDetails());
+        log.info("Added attribute personDetails");
         model.addAttribute("address", new Address());
-
+        log.info("Added attribute address");
         return "doctor/doctor";
     }
+
 
     @PostMapping("/doctor")
     public String doctorFormSubmission(@ModelAttribute Doctor doctor,
@@ -129,55 +131,75 @@ public class DoctorController {
 
     @PostMapping("/search-doctor")
     public String searchDoctorByPesel(@RequestParam(value = "id", required = false) long id, Model model) {
+        log.info("Invoked searchDoctorByPesel method with id: {}", id);
 
         DoctorDto doctorById = doctorService.findById(id);
-
+        if (doctorById != null) {
+            log.info("Doctor found with id: {}", id);
+        } else {
+            log.info("No doctor found with id: {}", id);
+        }
         model.addAttribute("searchForId", doctorById);
-
+        log.info("Added attribute searchForId with doctor details");
         return "doctor/search-doctor";
     }
 
     @GetMapping("/update-doctor")
     public String fullDetailDoctor(@RequestParam(value = "id") long id, Model model) {
-
+        log.info("Invoked fullDetailDoctor method with id: {}", id);
         model.addAttribute("doctor", doctorService.findById(id));
-
+        log.info("Added attribute doctor with details for id: {}", id);
         return "doctor/update-doctor";
     }
-
     @PostMapping("/update-doctor")
     public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, Model model,
                              Address address, RedirectAttributes redirectAttributes, PersonDetails personDetails) {
-
+        log.info("Invoked editDoctor method");
         doctorService.updateDoctor(doctor, address);
+        log.info("Updated doctor with id: {}", doctor.getId());
+
         model.addAttribute("doctor", doctor);
+        log.info("Added attribute doctor");
+
         model.addAttribute("address", address);
-        redirectAttributes.addFlashAttribute("success", "Zaktualizowano dane lekarza.");
+        log.info("Added attribute address");
+
+        redirectAttributes.addFlashAttribute("success", "Doctor data updated successfully.");
+        log.info("Added flash attribute success");
 
         return "redirect:doctors";
     }
-
     @GetMapping("/delete-doctor")
     public String showDeleteDoctorForm(@RequestParam("id") long id, Model model) {
 
+        log.info("Invoked showDeleteDoctorForm method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
+        if (doctorById != null) {
+            log.info("Doctor found with id: {}", id);
+        } else {
+            log.info("No doctor found with id: {}", id);
+        }
         model.addAttribute("doctor", doctorById);
-
+        log.info("Added attribute doctor with details for id: {}", id);
         return "doctor/delete-doctor";
     }
-
     @PostMapping("/delete-doctor")
     public String deleteDoctor(@RequestParam("id") long id, RedirectAttributes redirectAttributes) {
 
+        log.info("Invoked deleteDoctor method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
-
         if (doctorById != null) {
-
+            log.info("Doctor found with id: {}", id);
             doctorService.deleteDoctor(doctorById.getId());
-            redirectAttributes.addFlashAttribute("success", "Usunięto dane lekarza.");
+            log.info("Deleted doctor with id: {}", id);
+            redirectAttributes.addFlashAttribute("success", "Doctor data deleted successfully.");
+            log.info("Added flash attribute success");
+        } else {
+            log.info("No doctor found with id: {}", id);
         }
         return "redirect:/doctors";
     }
+
 
 
 }

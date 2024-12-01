@@ -28,10 +28,10 @@ public class PatientCardController {
 
     @GetMapping("/patient-card")
     public String createPatientCard(@RequestParam(value = "id", required = false) Long id, Model model) {
-        log.info("Wywołano metodę createPatientCard dla wizyty o id: {}", id);
+        log.info("createPatientCard method invoked for visit with ID: {}", id);
 
         if (id == null) {
-            log.warn("Nie podano identyfikatora wizyty.");
+            log.warn("Visit ID not provided.");
             model.addAttribute("error", "Nie znaleziono identyfikatora wizyty.");
             return "error";
         }
@@ -47,17 +47,17 @@ public class PatientCardController {
         model.addAttribute("visit", visit);
         model.addAttribute("patientCard", patientCardDTO);
 
-        log.info("Zakończono przetwarzanie createPatientCard dla wizyty o id: {}", id);
+        log.info("Finished processing createPatientCard for visit with ID: {}", id);
         return "patient/patient-card";
     }
 
 
     @GetMapping("/detail-patient-appointments")
     public String getDetailPatientAppointments(@RequestParam(value = "id", required = false) Long patientId, Model model) {
-        log.info("Wywołano metodę getDetailPatientAppointments dla pacjenta o id: {}", patientId);
+        log.info("getDetailPatientAppointments method invoked for patient with ID: {}", patientId);
 
         if (patientId == null) {
-            log.warn("Nie podano identyfikatora pacjenta.");
+            log.warn("Patient ID not provided.");
             model.addAttribute("error", "Nie podano identyfikatora pacjenta.");
             return "error";
         }
@@ -65,7 +65,7 @@ public class PatientCardController {
 
         List<PatientCard> patientAppointments = patientCardService.findAllPatientCardByPatientId(patientId);
         if (patientAppointments == null || patientAppointments.isEmpty()) {
-            log.warn("Brak zapisanych wizyt dla pacjenta o id: {}", patientId);
+            log.warn("No appointments found for patient with ID: {}", patientId);
             model.addAttribute("error", "Pacjent nie ma zapisanych wizyt.");
             return "error";
         }
@@ -73,7 +73,7 @@ public class PatientCardController {
 
         PatientCardDTO matchingPatientCard = patientCardService.findById(patientId);
         if (matchingPatientCard == null) {
-            log.warn("Nie znaleziono szczegółowej karty pacjenta o id: {}", patientId);
+            log.warn("No detailed patient card found with ID: {}", patientId);
             model.addAttribute("error", "Nie znaleziono szczegółowej karty pacjenta.");
             return "error";
         }
@@ -82,17 +82,17 @@ public class PatientCardController {
         model.addAttribute("matchingPatientCard", matchingPatientCard);
         model.addAttribute("patientAppointments", patientAppointments);
 
-        log.info("Zakończono przetwarzanie getDetailPatientAppointments dla pacjenta o id: {}", patientId);
+        log.info("Finished processing getDetailPatientAppointments for patient with ID: {}", patientId);
         return "patient/detail-patient-appointments";
     }
 
 
     @GetMapping("/patient-appointments")
     public String getPatientAppointments(@RequestParam(value = "id", required = false) Long patientId, Model model) {
-        log.info("Wywołano metodę getPatientAppointments dla pacjenta o id: {}", patientId);
+        log.info("getPatientAppointments method invoked for patient with ID: {}", patientId);
 
         if (patientId == null) {
-            log.warn("Nie podano identyfikatora pacjenta.");
+            log.warn("Patient ID not provided.");
             model.addAttribute("error", "Nie podano identyfikatora pacjenta.");
             return "error";
         }
@@ -100,13 +100,13 @@ public class PatientCardController {
 
         List<PatientCard> patientAppointments = patientCardService.findAllPatientCardByPatientId(patientId);
         if (patientAppointments == null || patientAppointments.isEmpty()) {
-            log.info("Brak wizyt dla pacjenta o id: {}", patientId);
+            log.info("No appointments found for patient with ID: {}", patientId);
             model.addAttribute("message", "Pacjent nie ma zapisanych wizyt.");
             return "patient/patient-appointments";
         }
 
         model.addAttribute("patientAppointments", patientAppointments);
-        log.info("Znaleziono {} wizyt dla pacjenta o id: {}", patientAppointments.size(), patientId);
+        log.info("Found {} appointments for patient with ID: {}", patientAppointments.size(), patientId);
 
         return "patient/patient-appointments";
     }

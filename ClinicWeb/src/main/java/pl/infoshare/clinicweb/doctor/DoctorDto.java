@@ -18,4 +18,5 @@ public class DoctorDto {
     @NotBlank(message = "Pole nie może być puste")
     private Specialization specialization;
 
+
 }

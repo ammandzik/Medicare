@@ -25,14 +25,12 @@ import java.util.stream.IntStream;
 public class PatientController {
 
     private final PatientService patientService;
-
     private final DoctorService doctorService;
 
 
     @GetMapping("/patient")
     public String patientForm(Model model) {
         log.info("Patient creation form retrieved.");
-
         model.addAttribute("personDetails", new PersonDetails());
         model.addAttribute("address", new Address());
         model.addAttribute("doctors", doctorService.findAllDoctors());
@@ -49,20 +47,14 @@ public class PatientController {
                                         Model model, RedirectAttributes redirectAttributes) {
 
         List<DoctorDto> doctors = doctorService.findAllDoctors();
-
         model.addAttribute("doctors", doctors);
 
         if (detailsBinding.hasErrors() || addressBinding.hasErrors()) {
-
             return "patient/patient";
-
         } else {
-
             redirectAttributes.addFlashAttribute("success", "Utworzono nowego pacjenta w bazie.");
-
             patientService.setPatientAttributes(patient, patientDetails, patientAddress);
             patientService.addPatient(patient);
-
             return "redirect:/patient";
         }
 
@@ -124,10 +116,8 @@ public class PatientController {
             log.error("An error occurred while updating patient data: {}", patient.getId(), e);
             redirectAttributes.addFlashAttribute("error", "Wystąpił błąd podczas aktualizacji danych pacjenta.");
         }
-
         return "redirect:/patients";
     }
-
 
     @GetMapping("/update-patient")
     public String fullDetailPatient(@RequestParam(value = "id", required = false)
@@ -135,8 +125,6 @@ public class PatientController {
                                     Model model) {
 
         model.addAttribute("patient", patientService.findById(id));
-
-
         return "patient/update-patient";
     }
 
@@ -162,7 +150,7 @@ public class PatientController {
 
     @PostMapping("/delete-patient")
     public String deletePatient(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
-        log.info("Rozpoczęto usuwanie pacjenta o id: {}", id);
+        log.info("Started deleting patient with ID: {}", id);
 
         try {
             PatientDto patientById = patientService.findById(id);

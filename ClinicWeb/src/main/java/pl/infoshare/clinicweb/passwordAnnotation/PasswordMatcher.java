@@ -17,9 +17,7 @@ final class PasswordMatcher implements ConstraintValidator<PasswordMatcherValida
         if (userDto == null) {
             return true;
         }
-
         boolean isPasswordValid = userDto.getPassword().equals(userDto.getConfirmPassword());
-
         if (!isPasswordValid) {
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate("Hasła muszą być identyczne")

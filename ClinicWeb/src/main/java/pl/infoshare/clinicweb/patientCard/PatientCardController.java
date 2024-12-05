@@ -35,22 +35,18 @@ public class PatientCardController {
             model.addAttribute("error", "Nie znaleziono identyfikatora wizyty.");
             return "error";
         }
-
         VisitDto visit = visitService.findVisitById(id);
         if (visit == null) {
             log.warn("Nie znaleziono wizyty o id: {}", id);
             model.addAttribute("error", "Wizyta nie istnieje.");
             return "error";
         }
-
         PatientCardDTO patientCardDTO = PatientCardService.getPatientCardDTO(visit);
         model.addAttribute("visit", visit);
         model.addAttribute("patientCard", patientCardDTO);
-
         log.info("Finished processing createPatientCard for visit with ID: {}", id);
         return "patient/patient-card";
     }
-
 
     @GetMapping("/detail-patient-appointments")
     public String getDetailPatientAppointments(@RequestParam(value = "id", required = false) Long patientId, Model model) {
@@ -61,19 +57,15 @@ public class PatientCardController {
             model.addAttribute("error", "Nie podano identyfikatora pacjenta.");
             return "error";
         }
-
-
         List<PatientCard> patientAppointments = patientCardService.findAllPatientCardByPatientId(patientId);
         if (patientAppointments == null || patientAppointments.isEmpty()) {
             log.warn("No appointments found for patient with ID: {}", patientId);
             model.addAttribute("error", "Pacjent nie ma zapisanych wizyt.");
             return "error";
         }
-
-
         PatientCardDTO matchingPatientCard = patientCardService.findById(patientId);
         if (matchingPatientCard == null) {
-            log.warn("No detailed patient card found with ID: {}", patientId);
+            log.warn("No detailed patient card found with patient ID: {}", patientId);
             model.addAttribute("error", "Nie znaleziono szczegółowej karty pacjenta.");
             return "error";
         }
@@ -110,35 +102,33 @@ public class PatientCardController {
 
         return "patient/patient-appointments";
     }
-        @PostMapping("/patient-card")
-        public String savePatientCard(
-                @Valid @ModelAttribute("patientCard") PatientCardDTO patientCardDTO,
-                BindingResult bindingResult,
-                RedirectAttributes redirectAttributes,
-                Model model) {
 
-            if (bindingResult.hasErrors()) {
-                log.error("validation error patient card saved: {}", bindingResult.getAllErrors());
-                model.addAttribute("error", "Błąd zapisu karty pacjenta");
-                return "patient/patient-card";
-            }
+    @PostMapping("/patient-card")
+    public String savePatientCard(
+            @Valid @ModelAttribute("patientCard") PatientCardDTO patientCardDTO ,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
-            try {
-                PatientCardDTO matchingPatientCard = patientCardService.findById(patientCardDTO.getPatientId());
-                PatientCard patientCard = patientCardMapper.toEntity(patientCardDTO);
-                model.addAttribute("matchingCard",matchingPatientCard);
+        if (bindingResult.hasErrors()) {
+            log.error("validation error patient card saved: {}", bindingResult.getAllErrors());
+            model.addAttribute("error", "Błąd zapisu karty pacjenta");
+            return "patient/patient-card";
+        }
 
-                patientCardService.patientCardSave(patientCard);
-                log.info("Patient card success saved {}", patientCard.getId());
-                redirectAttributes.addFlashAttribute("successMessage", "Karta pacjenta została pomyślnie zapisana!");
-                return "patient/patient-appointments";
+        try {
+            PatientCard patientCard = patientCardMapper.toEntity(patientCardDTO);
+            patientCardService.patientCardSave(patientCard);
+            log.info("Patient card success saved {}", patientCard.getId());
+            redirectAttributes.addFlashAttribute("successMessage", "Karta pacjenta została pomyślnie zapisana!");
+            return "patient/patient-appointments";
 
-            } catch (Exception e) {
-                log.error("error patient card saved", e);
-                model.addAttribute("error", "Wystąpił nieoczekiwany błąd podczas zapisu karty pacjenta");
-                return "patient/patient-card";
-            }
+        } catch (Exception e) {
+            log.error("error patient card saved", e);
+            model.addAttribute("error", "Wystąpił nieoczekiwany błąd podczas zapisu karty pacjenta");
+            return "patient/patient-card";
         }
     }
+}
 
 

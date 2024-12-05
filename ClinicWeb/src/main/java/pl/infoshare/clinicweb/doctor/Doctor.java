@@ -28,15 +28,12 @@ public class Doctor {
     private Specialization specialization;
     private boolean online;
     private boolean availability;
-
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Patient> patients;
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PatientCard> patientCards;
-
     @Embedded
     private PersonDetails details;
-
     @Embedded
     private Address address;
 

@@ -129,12 +129,10 @@ public class DoctorController {
 
     @PostMapping("/search-doctor")
     public String searchDoctorByPesel(@RequestParam(value = "id", required = false) long id, Model model) {
-        log.info("Invoked searchDoctorByPesel method with id: {}", id);
+        log.info("Invoked searchDoctorById method with id: {}", id);
 
         DoctorDto doctorById = doctorService.findById(id);
-        if (doctorById != null) {
-            log.info("Doctor found with id: {}", id);
-        } else {
+        if (doctorById == null) {
             log.info("No doctor found with id: {}", id);
         }
         model.addAttribute("searchForId", doctorById);
@@ -171,9 +169,7 @@ public class DoctorController {
 
         log.info("Invoked showDeleteDoctorForm method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
-        if (doctorById != null) {
-            log.info("Doctor found with id: {}", id);
-        } else {
+        if (doctorById == null) {
             log.info("No doctor found with id: {}", id);
         }
         model.addAttribute("doctor", doctorById);
@@ -187,7 +183,6 @@ public class DoctorController {
         log.info("Invoked deleteDoctor method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
         if (doctorById != null) {
-            log.info("Doctor found with id: {}", id);
             doctorService.deleteDoctor(doctorById.getId());
             log.info("Deleted doctor with id: {}", id);
             redirectAttributes.addFlashAttribute("success", "Doctor data deleted successfully.");

@@ -38,14 +38,10 @@ public class VisitService {
             throw new TimeSlotUnavailableException(visitTime);
 
         }
-
         DoctorDto doctor = doctorService.findById(doctorId);
         Doctor entityDoctor = doctorMapper.toEntity(doctor);
-
-
         PatientDto patient = patientService.findById(patientId);
         Patient entityPatient = patientMapper.toEntity(patient);
-
         visit.setDoctor(entityDoctor);
         visit.setPatient(entityPatient);
         visit.setVisitTime(visitTime);
@@ -77,7 +73,6 @@ public class VisitService {
 
         Page<VisitDto> visits = entities.map(visit -> {
             VisitDto visitDto = visitMapper.toVisitDto(visit);
-
             return visitDto;
         });
 

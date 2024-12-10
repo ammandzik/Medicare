@@ -28,6 +28,7 @@
     </div>
     <form th:action="@{/update-patient}" th:method="post" th:object="${patient}">
         <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" th:field="*{id}" th:value="${patient.id}" />
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -44,6 +45,11 @@
                     <label for="surname" class="form-label">Nazwisko:</label>
                     <input type="text" class="form-control" id="surname"
                            th:field="${patient.surname}">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber" class="form-label">Numer telefonu:</label>
+                    <input type="text" class="form-control" id="phoneNumber"
+                           th:field="${patient.phoneNumber}">
                 </div>
                 <div class="form-group">
                     <label for="country" class="form-label">Państwo:</label>
@@ -70,6 +76,11 @@
                     <label for="flatNumber" class="form-label">Numer mieszkania:</label>
                     <input type="text" class="form-control" id="flatNumber"
                            th:field="${patient.flatNumber}">
+                </div>
+                <div class="form-group">
+                    <label for="zipCode" class="form-label">Kod pocztowy:</label>
+                    <input type="text" class="form-control" id="zipCode"
+                           th:field="${patient.zipCode}">
                 </div>
             </div>
         </div>

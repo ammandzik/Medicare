@@ -9,9 +9,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import pl.infoshare.clinicweb.annotation.peselDuplicate.UniquePeselValidator;
 import lombok.NoArgsConstructor;
-import pl.infoshare.clinicweb.annotation.peselDuplicate.PeselDuplicateValidator;
+import pl.infoshare.clinicweb.annotation.peselDuplicate.UniquePeselValidator;
+
 import java.time.LocalDate;
 
 @Data

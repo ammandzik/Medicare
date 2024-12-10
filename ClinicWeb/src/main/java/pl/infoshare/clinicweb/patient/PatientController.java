@@ -123,10 +123,13 @@ public class PatientController {
 
     @PostMapping("/update-patient")
     public String editPatient(@ModelAttribute("patient") PatientDto patient,
+                              @RequestParam(value = "id", required = false) Long id,
                               Model model, Address address, RedirectAttributes redirectAttributes) {
+
 
         model.addAttribute("patient", patient);
         model.addAttribute("address", address);
+
 
         patientService.updatePatient(patient, address);
         redirectAttributes.addFlashAttribute("success", "Zaktualizowano dane pacjenta.");

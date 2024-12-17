@@ -50,7 +50,7 @@ public class PatientCardController {
 
     @GetMapping("/detail-patient-appointments")
     public String getDetailPatientAppointments(@RequestParam(value = "id", required = false) Long patientId, Model model) {
-        log.info("getDetailPatientAppointments method invoked for patient with ID: {}", patientId);
+
 
         if (patientId == null) {
             log.warn("Patient ID not provided.");
@@ -74,14 +74,12 @@ public class PatientCardController {
         model.addAttribute("matchingPatientCard", matchingPatientCard);
         model.addAttribute("patientAppointments", patientAppointments);
 
-        log.info("Finished processing getDetailPatientAppointments for patient with ID: {}", patientId);
         return "patient/detail-patient-appointments";
     }
 
 
     @GetMapping("/patient-appointments")
     public String getPatientAppointments(@RequestParam(value = "id", required = false) Long patientId, Model model) {
-        log.info("getPatientAppointments method invoked for patient with ID: {}", patientId);
 
         if (patientId == null) {
             log.warn("Patient ID not provided.");
@@ -98,8 +96,6 @@ public class PatientCardController {
         }
 
         model.addAttribute("patientAppointments", patientAppointments);
-        log.info("Found {} appointments for patient with ID: {}", patientAppointments.size(), patientId);
-
         return "patient/patient-appointments";
     }
 

@@ -53,6 +53,7 @@ public class PatientController {
             return "patient/patient";
         } else {
             redirectAttributes.addFlashAttribute("success", "Utworzono nowego pacjenta w bazie.");
+            log.info("Patient creation form submitted successfully id: {}.", patient.getId());
             patientService.setPatientAttributes(patient, patientDetails, patientAddress);
             patientService.addPatient(patient);
             return "redirect:/patient";
@@ -100,6 +101,7 @@ public class PatientController {
             model.addAttribute("address", address);
         } else {
             model.addAttribute("error", "Patient not found");
+            log.info("Patient  for id: {} not found.",patient.getId());
         }
         return "patient/search";
     }
@@ -130,7 +132,6 @@ public class PatientController {
 
     @GetMapping("/search-patient")
     public String searchPatientByPesel(Model model, @RequestParam(value = "pesel", required = false) String pesel) {
-        log.info("Started searching for patient by PESEL number: {}", pesel);
 
         if (pesel == null || !Utils.hasPeselCorrectDigits(pesel)) {
             log.warn("Invalid PESEL number format: {}", pesel);
@@ -150,8 +151,6 @@ public class PatientController {
 
     @PostMapping("/delete-patient")
     public String deletePatient(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
-        log.info("Started deleting patient with ID: {}", id);
-
         try {
             PatientDto patientById = patientService.findById(id);
             if (patientById != null) {

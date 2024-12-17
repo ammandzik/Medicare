@@ -1,6 +1,8 @@
 package pl.infoshare.clinicweb.visit;
 
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ import java.util.stream.IntStream;
 @Controller
 public class VisitController {
 
+    private static final Logger log = LoggerFactory.getLogger(VisitController.class);
     private final VisitService visitService;
     private final DoctorService doctorService;
     private final PatientService patientService;
@@ -60,6 +63,7 @@ public class VisitController {
 
         if (visitBindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "Wystąpiły błędy w formularzu. Proszę poprawić poniższe błędy.");
+            log.error("there are errors in the form {}", visitBindingResult.getAllErrors());
             prepareVisitFormData(model);
             return "visit/visit";
         }
@@ -70,6 +74,7 @@ public class VisitController {
             visitDateTime = LocalDateTime.parse(visitDate, formatter);
         } catch (DateTimeParseException e) {
             model.addAttribute("errorMessage", "Nieprawidłowy format daty. Proszę wybrać poprawną datę i godzinę.");
+            log.info("there are errors in the form, {}", visitBindingResult.getAllErrors());
             prepareVisitFormData(model);
             return "visit/visit";
         }
@@ -100,6 +105,7 @@ public class VisitController {
 
         visitService.saveVisit(visit, doctorId, patientId, visitDateTime);
         redirectAttributes.addFlashAttribute("success", "Pomyślnie zarejestrowano. Dziękujemy za rejestrację!");
+        log.info("Your visit was successfully registered id {}", visit.getId());
         return "redirect:/visit";
     }
 

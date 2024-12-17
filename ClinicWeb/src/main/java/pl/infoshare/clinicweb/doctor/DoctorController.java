@@ -78,7 +78,7 @@ public class DoctorController {
 
         model.addAttribute("personDetails", new PersonDetails());
         model.addAttribute("address", new Address());
-        log.info("Opening new doctor creation form");
+        log.info("Opening the form to create a new doctor");
         return "doctor/doctor";
     }
 
@@ -122,13 +122,13 @@ public class DoctorController {
     }
 
     @GetMapping("/search-doctor")
-    public String searchDoctorByPesel(@ModelAttribute Doctor doctor) {
+    public String searchDoctorById(@ModelAttribute Doctor doctor) {
 
         return "doctor/search-doctor";
     }
 
     @PostMapping("/search-doctor")
-    public String searchDoctorByPesel(@RequestParam(value = "id", required = false) long id, Model model) {
+    public String searchDoctorById(@RequestParam(value = "id", required = false) long id, Model model) {
         log.info("Invoked searchDoctorById method with id: {}", id);
 
         DoctorDto doctorById = doctorService.findById(id);
@@ -136,7 +136,6 @@ public class DoctorController {
             log.info("No doctor found with id: {}", id);
         }
         model.addAttribute("searchForId", doctorById);
-        log.info("Added attribute searchForId with doctor details");
         return "doctor/search-doctor";
     }
 
@@ -144,7 +143,7 @@ public class DoctorController {
     public String fullDetailDoctor(@RequestParam(value = "id") long id, Model model) {
         log.info("Invoked fullDetailDoctor method with id: {}", id);
         model.addAttribute("doctor", doctorService.findById(id));
-        log.info("Added attribute doctor with details for id: {}", id);
+        log.info("doctor with ID {} found with details ", id);
         return "doctor/update-doctor";
     }
 
@@ -173,7 +172,6 @@ public class DoctorController {
             log.info("No doctor found with id: {}", id);
         }
         model.addAttribute("doctor", doctorById);
-        log.info("Added attribute doctor with details for id: {}", id);
         return "doctor/delete-doctor";
     }
 
@@ -186,8 +184,7 @@ public class DoctorController {
             doctorService.deleteDoctor(doctorById.getId());
             log.info("Deleted doctor with id: {}", id);
             redirectAttributes.addFlashAttribute("success", "Doctor data deleted successfully.");
-            log.info("Added flash attribute success");
-        } else {
+                   } else {
             log.info("No doctor found with id: {}", id);
         }
         return "redirect:/doctors";

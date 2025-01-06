@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import pl.infoshare.clinicweb.user.entity.Gender;
 
-import java.util.PrimitiveIterator;
-
 @Data
 @AllArgsConstructor
 @Builder

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.infoshare.clinicweb.patient.Address;
-import pl.infoshare.clinicweb.user.entity.PersonDetails;
 import pl.infoshare.clinicweb.user.Utils;
+import pl.infoshare.clinicweb.user.entity.PersonDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -184,7 +184,7 @@ public class DoctorController {
             doctorService.deleteDoctor(doctorById.getId());
             log.info("Deleted doctor with id: {}", id);
             redirectAttributes.addFlashAttribute("success", "Doctor data deleted successfully.");
-                   } else {
+        } else {
             log.info("No doctor found with id: {}", id);
         }
         return "redirect:/doctors";

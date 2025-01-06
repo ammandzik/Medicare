@@ -81,6 +81,7 @@ public class PatientService {
 
 
         patientRepository.save(patient);
+
     }
 
 
@@ -97,10 +98,10 @@ public class PatientService {
     public void setPatientAttributes(Patient patient, PersonDetails personDetails,
                                      Address address) {
 
-        LocalDate dateBirthDate = PatientService.decodeDateOfBirth(personDetails.getPesel());
+        LocalDate localDateBirthDate = PatientService.decodeDateOfBirth(personDetails.getPesel());
 
         patient.setPersonDetails(personDetails);
-        patient.getPersonDetails().setBirthDate(dateBirthDate);
+        patient.getPersonDetails().setBirthDate(localDateBirthDate);
         patient.setAddress(address);
 
     }

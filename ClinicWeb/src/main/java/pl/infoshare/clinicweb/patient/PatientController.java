@@ -70,6 +70,18 @@ public class PatientController {
 
         Page<PatientDto> patientPage = patientService.findPage(currentPage);
         int totalPages = patientPage.getTotalPages();
+        List<PatientDto> patients = patientPage.getContent();
+
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        if (totalPages == 0) {
+            totalPages = 1;
+        }
 
         model.addAttribute("pesel", pesel);
         model.addAttribute("currentPage", currentPage);

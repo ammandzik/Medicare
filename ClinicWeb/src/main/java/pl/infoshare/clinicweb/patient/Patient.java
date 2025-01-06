@@ -31,7 +31,7 @@ public class Patient {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<PatientCard> patientCards = new HashSet<>();
     @ManyToOne()
     private Clinic clinic;

@@ -28,11 +28,12 @@ public class DoctorController {
 
     private final DoctorService doctorService;
 
-
     @GetMapping(value = "/doctors")
     public String listDoctors(@RequestParam(required = false) Specialization specialization, Model model,
-                              @RequestParam(value = "page") @ModelAttribute Optional<Integer> page,
-                              @RequestParam(value = "size") @ModelAttribute Optional<Integer> size) {
+                              @RequestParam(value = "page")
+                              @ModelAttribute Optional<Integer> page,
+                              @RequestParam(value = "size")
+                              @ModelAttribute Optional<Integer> size) {
 
         log.info("Invoked listDoctors method");
         int currentPage = page.orElse(1);
@@ -56,6 +57,8 @@ public class DoctorController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+
+
         if (totalPages == 0) {
             totalPages = 1;
         }
@@ -72,7 +75,6 @@ public class DoctorController {
         return "doctor/doctors";
     }
 
-
     @GetMapping("/doctor")
     public String doctorForm(Model model) {
 
@@ -82,7 +84,6 @@ public class DoctorController {
         return "doctor/doctor";
     }
 
-
     @PostMapping("/doctor")
     public String doctorFormSubmission(@ModelAttribute Doctor doctor,
                                        @Valid PersonDetails doctorDetails, BindingResult detailsBinding,
@@ -91,7 +92,6 @@ public class DoctorController {
                                        @RequestParam("pesel") String pesel,
                                        RedirectAttributes redirectAttributes, Model model) {
 
-        log.info("Received doctor form submission with specialization: {}, pesel: {}", specialization, pesel);
 
         if (detailsBinding.hasErrors() || addressBinding.hasErrors() || !Utils.hasPeselCorrectDigits(pesel)) {
             log.warn("Validation errors occurred during doctor form submission.");
@@ -113,6 +113,7 @@ public class DoctorController {
             log.info("Validation successful, creating doctor with details: {}", doctorDetails);
 
             redirectAttributes.addFlashAttribute("success", "Utworzono nowego lekarza w bazie.");
+
             doctorService.setDoctorAttributes(doctor, doctorDetails, doctorAddress, specialization);
             doctorService.addDoctor(doctor);
 
@@ -166,7 +167,6 @@ public class DoctorController {
     @GetMapping("/delete-doctor")
     public String showDeleteDoctorForm(@RequestParam("id") long id, Model model) {
 
-        log.info("Invoked showDeleteDoctorForm method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
         if (doctorById == null) {
             log.info("No doctor found with id: {}", id);
@@ -178,7 +178,6 @@ public class DoctorController {
     @PostMapping("/delete-doctor")
     public String deleteDoctor(@RequestParam("id") long id, RedirectAttributes redirectAttributes) {
 
-        log.info("Invoked deleteDoctor method with id: {}", id);
         DoctorDto doctorById = doctorService.findById(id);
         if (doctorById != null) {
             doctorService.deleteDoctor(doctorById.getId());

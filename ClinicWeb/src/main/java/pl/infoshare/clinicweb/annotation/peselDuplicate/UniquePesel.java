@@ -20,14 +20,11 @@ public final class UniquePesel implements ConstraintValidator<UniquePeselValidat
     public void initialize(UniquePeselValidator constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
-
     @Override
     public boolean isValid(String pesel, ConstraintValidatorContext constraintValidatorContext) {
-
         if (pesel == null || pesel.isEmpty()) {
             return true;
         }
-
         return patientService.existsByPesel(pesel) || doctorService.existsByPesel(pesel) ? false : true;
     }
 }

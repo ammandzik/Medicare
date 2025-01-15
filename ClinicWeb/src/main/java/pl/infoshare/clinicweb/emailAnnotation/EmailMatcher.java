@@ -27,16 +27,13 @@ public final class EmailMatcher implements ConstraintValidator<EmailMatcherValid
             if (userDto == null) {
                 return true;
             }
-
             boolean isEmailValid = !userService.isUserAlreadyRegistered(userDto.getEmail());
-
             if (!isEmailValid) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate("Podany adres email istnieje już w bazie.")
                         .addPropertyNode("email")
                         .addConstraintViolation();
             }
-
             return isEmailValid ;
         }
     }
